@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BAYMOTION - 9 Game Interaktif PJOK Proyektor</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #141416;
+      color: #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Canvas Confetti Overlay */
+    #confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Sticky Scoreboard Bar */
+    .scoreboard-bar {
+      background: #1D1D21;
+      border-bottom: 2px solid #FF6B1A;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+
+    .brand-title {
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: #FF6B1A;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .team-scores-grid {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .team-badge {
+      background: #28282C;
+      border: 1px solid #3F3F46;
+      border-radius: 12px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 800;
+    }
+
+    .team-badge .pts {
+      color: #FFC857;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Header */
+    .header-section {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .header-section h1 {
+      font-size: 48px;
+      font-weight: 900;
+      color: #FF6B1A;
+      margin-bottom: 8px;
+      text-shadow: 0 4px 15px rgba(255, 107, 26, 0.4);
+    }
+
+    .header-section p {
+      font-size: 28px;
+      color: #D1D5DB;
+      font-weight: 600;
+    }
+
+    /* Menu Grid 2x5 */
+    .games-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .game-card {
+      background: #242428;
+      border: 2px solid #3F3F46;
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      border-color: #FF6B1A;
+      box-shadow: 0 12px 30px rgba(255, 107, 26, 0.3);
+    }
+
+    .game-card .emoji {
+      font-size: 52px;
+      margin-bottom: 12px;
+    }
+
+    .game-card h2 {
+      font-size: 28px;
+      font-weight: 900;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+
+    .game-card p {
+      font-size: 18px;
+      color: #D1D5DB;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .game-card .tag {
+      align-self: flex-start;
+      background: rgba(255, 107, 26, 0.25);
+      border: 1px solid #FF6B1A;
+      color: #FF9F43;
+      padding: 4px 14px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    /* Buttons */
+    .btn {
+      font-size: 24px;
+      font-weight: 900;
+      padding: 16px 32px;
+      border-radius: 18px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn-orange {
+      background: linear-gradient(135deg, #FF6B1A, #FF9F43);
+      color: #FFFFFF;
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: #FFFFFF;
+    }
+
+    .btn-red {
+      background: linear-gradient(135deg, #EF4444, #DC2626);
+      color: #FFFFFF;
+    }
+
+    .btn-purple {
+      background: linear-gradient(135deg, #9B59B6, #8E44AD);
+      color: #FFFFFF;
+    }
+
+    .btn-ghost {
+      background: #28282C;
+      color: #FFFFFF;
+      border: 2px solid #3F3F46;
+    }
+
+    /* Game View Wrapper */
+    .game-view {
+      display: none;
+      background: #242428;
+      border: 2px solid #3F3F46;
+      border-radius: 28px;
+      padding: 36px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .game-view.active {
+      display: block;
+    }
+
+    .view-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      border-bottom: 2px solid #3F3F46;
+      padding-bottom: 18px;
+    }
+
+    .view-title {
+      font-size: 36px;
+      font-weight: 900;
+      color: #FF6B1A;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Option Box */
+    .question-box {
+      font-size: 32px;
+      font-weight: 900;
+      background: #17171A;
+      border-left: 8px solid #FF6B1A;
+      padding: 24px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      line-height: 1.45;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .opt-card {
+      background: #17171A;
+      border: 2px solid #3F3F46;
+      border-radius: 16px;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .opt-card.correct {
+      background: rgba(16, 185, 129, 0.25);
+      border-color: #10B981;
+      color: #6EE7B7;
+    }
+
+    /* Wheel Canvas */
+    .wheel-container {
+      position: relative;
+      width: 340px;
+      height: 340px;
+      margin: 0 auto 24px;
+    }
+
+    .wheel-pointer {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 30px solid #FF6B1A;
+      z-index: 10;
+    }
+
+    #spinWheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: 0 0 25px rgba(0,0,0,0.8), 0 0 10px #FFC857;
+      transition: transform 4s cubic-bezier(0.15, 0.99, 0.18, 0.99);
+    }
+
+    /* 4x4 Memory Match Grid */
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .mem-card {
+      height: 120px;
+      border-radius: 18px;
+      border: 2px solid #3F3F46;
+      background: #17171A;
+      color: #FFFFFF;
+      font-size: 28px;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .mem-card.flipped {
+      background: #28282C;
+      border-color: #9B59B6;
+    }
+
+    .mem-card.matched {
+      background: rgba(16, 185, 129, 0.25);
+      border-color: #10B981;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Scoreboard Bar -->
+  <div class="scoreboard-bar">
+    <div class="brand-title">
+      <span>🏆</span> BAYMOTION PJOK (9 GAME ARENA)
+    </div>
+    <div class="team-scores-grid" id="teamScoresBar"></div>
+  </div>
+
+  <div class="container">
+    <!-- MENU UTAMA 9 GAME -->
+    <div id="mainMenuView">
+      <div class="header-section">
+        <h1>🎮 9 Game Interaktif PJOK Proyektor</h1>
+        <p>100% Dioperasikan Guru via Proyektor Tanpa HP Siswa!</p>
+      </div>
+
+      <div class="games-menu-grid">
+        <div class="game-card" onclick="openGame('grandPrix')">
+          <div class="emoji">🏎️</div>
+          <span class="tag">GAME 7 • NEW</span>
+          <h2>Grand Prix Rebut & Gerak</h2>
+          <p>Tim berlomba melakukan gerakan fisik acak! Guru memilih tim tercepat untuk menjawab kuis.</p>
+          <button class="btn btn-orange" style="font-size: 18px; padding: 10px;">Mainkan Game →</button>
+        </div>
+
+        <div class="game-card" onclick="openGame('rodaKeberuntungan')">
+          <div class="emoji">🎡</div>
+          <span class="tag">GAME 8 • NEW</span>
+          <h2>Roda Keberuntungan PJOK</h2>
+          <p>Putar roda spin 6 segmen untuk menentukan tantangan fisik atau strategi kelompok!</p>
+          <button class="btn btn-orange" style="font-size: 18px; padding: 10px;">Mainkan Game →</button>
+        </div>
+
+        <div class="game-card" onclick="openGame('memoryMatch')">
+          <div class="emoji">🃏</div>
+          <span class="tag">GAME 9 • NEW</span>
+          <h2>Memory Match Teori PJOK</h2>
+          <p>Cari pasangan kartu teknik & jawab pertanyaan teori PJOK di depan kelas untuk +5 Poin!</p>
+          <button class="btn btn-orange" style="font-size: 18px; padding: 10px;">Mainkan Game →</button>
+        </div>
+
+        <div class="game-card" onclick="openGame('quizBattle')">
+          <div class="emoji">⚔️</div>
+          <span class="tag">GAME 1</span>
+          <h2>Volley Quiz Battle</h2>
+          <p>Kuis Pilihan Ganda berpacu waktu dengan timer 30 detik untuk seluruh tim kelas.</p>
+          <button class="btn btn-ghost" style="font-size: 18px; padding: 10px;">Mainkan Game →</button>
+        </div>
+
+        <div class="game-card" onclick="openGame('tebakGerakan')">
+          <div class="emoji">🤸</div>
+          <span class="tag">GAME 2</span>
+          <h2>Tebak Gerakan</h2>
+          <p>Tebak gambar emoji & ilustrasi peragaan teknik olahraga secara cepat.</p>
+          <button class="btn btn-ghost" style="font-size: 18px; padding: 10px;">Mainkan Game →</button>
+        </div>
+
+        <div class="game-card" onclick="openGame('detektifKesalahan')">
+          <div class="emoji">🔍</div>
+          <span class="tag">GAME 3</span>
+          <h2>Detektif Kesalahan</h2>
+          <p>Analisis foto/skenario gerakan salah dan tentukan perbaikan teknik yang benar.</p>
+          <button class="btn btn-ghost" style="font-size: 18px; padding: 10px;">Mainkan Game →</button>
+        </div>
+
+        <div class="game-card" onclick="openGame('volleyBoard')">
+          <div class="emoji">🎲</div>
+          <span class="tag">GAME 4</span>
+          <h2>Sports Board Game</h2>
+          <p>Papan petualangan digital! Kocok dadu, jalankan bidak, & roll dadu penalti mundur jika salah.</p>
+          <button class="btn btn-ghost" style="font-size: 18px; padding: 10px;">Mainkan Game →</button>
+        </div>
+
+        <div class="game-card" onclick="openGame('siapaCepat')">
+          <div class="emoji">⚡</div>
+          <span class="tag">GAME 5</span>
+          <h2>Siapa Cepat Dia Dapat</h2>
+          <p>Uji refleks cepat! Siapa tim tercepat mengankat kartu mendapat hak jawab.</p>
+          <button class="btn btn-ghost" style="font-size: 18px; padding: 10px;">Mainkan Game →</button>
+        </div>
+
+        <div class="game-card" onclick="openGame('sportsCharades')">
+          <div class="emoji">🎭</div>
+          <span class="tag">GAME 6</span>
+          <h2>Sports Charades</h2>
+          <p>Siswa melakukan pantomim gerakan tanpa suara, kelompok lain menebak gerakannya!</p>
+          <button class="btn btn-ghost" style="font-size: 18px; padding: 10px;">Mainkan Game →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME 7: GRAND PRIX REBUT & GERAK -->
+    <div id="grandPrixView" class="game-view">
+      <div class="view-header">
+        <div class="view-title">🏎️ Grand Prix Rebut & Gerak</div>
+        <button class="btn btn-ghost" onclick="showMainMenu()">← Menu Utama</button>
+      </div>
+
+      <div id="gpActionBanner" style="display:none; background: linear-gradient(135deg, #FF6B1A, #FF9F43); border-radius: 20px; padding: 24px; text-align: center; margin-bottom: 24px; font-size: 28px; font-weight: 900; color: #FFFFFF;"></div>
+
+      <div class="question-box" id="gpQuestionText"></div>
+
+      <div class="options-grid" id="gpOptionsGrid"></div>
+
+      <div style="border-top: 2px solid #3F3F46; padding-top: 24px;">
+        <div style="display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;">
+          <button class="btn btn-orange" onclick="triggerGrandPrixAction()">🎲 Acak Gerakan Fisik!</button>
+          <button class="btn btn-green" onclick="answerGrandPrix(true)">Benar ✅ (+10 Poin)</button>
+          <button class="btn btn-red" onclick="answerGrandPrix(false)">Salah ❌ (-5 Poin)</button>
+          <button class="btn btn-ghost" onclick="nextGrandPrixQ()" style="margin-left: auto;">⏭ Next Soal</button>
+        </div>
+
+        <div style="font-size: 20px; font-weight: 800; color: #D1D5DB; margin-bottom: 12px;">PILIH TIM TERCEPAT MELAKUKAN GERAKAN:</div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;" id="gpTeamPicker"></div>
+      </div>
+    </div>
+
+    <!-- GAME 8: RODA KEBERUNTUNGAN PJOK -->
+    <div id="rodaKeberuntunganView" class="game-view">
+      <div class="view-header">
+        <div class="view-title">🎡 Roda Keberuntungan PJOK</div>
+        <button class="btn btn-ghost" onclick="showMainMenu()">← Menu Utama</button>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 360px 1fr; gap: 32px;">
+        <div style="text-align: center;">
+          <div class="wheel-container">
+            <div class="wheel-pointer"></div>
+            <canvas id="spinWheel" width="340" height="340"></canvas>
+          </div>
+          <button class="btn btn-orange" onclick="spinWheel()" style="width: 100%;">🎡 Putar Roda!</button>
+        </div>
+
+        <div>
+          <div id="wheelResultBox" style="display: none; background: #17171A; border: 2px solid #FFC857; border-radius: 20px; padding: 24px; margin-bottom: 24px; text-align: center;">
+            <div id="wheelSegTitle" style="font-size: 32px; font-weight: 900; color: #FFC857; margin-bottom: 12px;"></div>
+            <div id="wheelSegPrompt" style="font-size: 26px; font-weight: 800; color: #FFFFFF; line-height: 1.5;"></div>
+          </div>
+
+          <div style="font-size: 22px; font-weight: 800; color: #D1D5DB; margin-bottom: 12px;">BERIKAN POIN UNTUK TIM TERBAIK:</div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;" id="wheelTeamPicker"></div>
+
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <span style="font-size: 20px; font-weight: 800;">Poin:</span>
+            <button class="btn btn-green" onclick="awardWheelPoints(5)">+5 Poin</button>
+            <button class="btn btn-green" onclick="awardWheelPoints(10)">+10 Poin</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME 9: MEMORY MATCH TEORI PJOK -->
+    <div id="memoryMatchView" class="game-view">
+      <div class="view-header">
+        <div class="view-title">🃏 Memory Match Teori PJOK</div>
+        <button class="btn btn-ghost" onclick="showMainMenu()">← Menu Utama</button>
+      </div>
+
+      <div style="font-size: 26px; font-weight: 800; color: #9B59B6; margin-bottom: 20px;" id="memTurnBanner">
+        GILIRAN: TIM GARUDAKU 🦅
+      </div>
+
+      <div id="memDemoModal" style="display: none; background: linear-gradient(135deg, #9B59B6, #8E44AD); border-radius: 20px; padding: 24px; text-align: center; margin-bottom: 24px;">
+        <div style="font-size: 28px; font-weight: 900; color: #FFC857;" id="memDemoTitle"></div>
+        <div style="font-size: 26px; font-weight: 800; color: #FFFFFF; margin: 14px 0; line-height: 1.45;" id="memDemoQuestion"></div>
+        <div style="margin-top: 16px; display: flex; justify-content: center; gap: 16px;">
+          <button class="btn btn-green" onclick="confirmMemMatch(true)">Jawaban Teori Benar 🧠 (+5 Poin)</button>
+          <button class="btn btn-red" onclick="confirmMemMatch(false)">Kurang Tepat ❌ (0 Poin)</button>
+        </div>
+      </div>
+
+      <div class="memory-grid" id="memGrid"></div>
+    </div>
+
+    <!-- GENERIC QUIZ BATTLE / OTHER GAMES VIEW -->
+    <div id="genericGameView" class="game-view">
+      <div class="view-header">
+        <div class="view-title" id="genericTitle">🎮 Mode Game PJOK</div>
+        <button class="btn btn-ghost" onclick="showMainMenu()">← Menu Utama</button>
+      </div>
+      <div class="question-box" id="genericQText"></div>
+      <div class="options-grid" id="genericOptGrid"></div>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <button class="btn btn-green" onclick="playAudio('correct'); alert('✅ Tantangan/Kuis Berhasil! Bidak Aman & Lanjut Giliran.'); nextGenericQ();">✅ Berhasil (Aman & Lanjut Giliran)</button>
+        <button class="btn btn-red" onclick="rollBoardPenalty();">🎲 ❌ GAGAL (ROLL DADU PENALTI MUNDUR!)</button>
+        <button class="btn btn-ghost" onclick="nextGenericQ()">Soal Berikutnya ⏭</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Audio Synth Web Audio API
+    function playAudio(type) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (type === 'click') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.frequency.value = 600;
+          gain.gain.value = 0.2;
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(); osc.stop(ctx.currentTime + 0.08);
+        } else if (type === 'correct') {
+          [523, 659, 784, 1046].forEach((f, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.frequency.value = f;
+            gain.gain.value = 0.2;
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + i*0.08); osc.stop(ctx.currentTime + i*0.08 + 0.2);
+          });
+        } else if (type === 'wrong') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth'; osc.frequency.value = 180;
+          gain.gain.value = 0.3;
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(); osc.stop(ctx.currentTime + 0.25);
+        }
+      } catch(e) {}
+    }
+
+    function rollBoardPenalty() {
+      playAudio('wrong');
+      const penaltySteps = Math.floor(Math.random() * 6) + 1;
+      alert(`❌ TANTANGAN GAGAL!\nDadu Penalti Menunjukkan: ${penaltySteps}\n\nBidak Tim MUNDUR ${penaltySteps} KOTAK ke belakang!`);
+      nextGenericQ();
+    }
+
+    // Confetti Engine
+    function triggerConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#FF6B1A', '#FFC857', '#10B981', '#3498DB', '#9B59B6'];
+
+      for(let i=0; i<80; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 18,
+          vy: (Math.random() - 0.7) * 18,
+          size: Math.random() * 10 + 6,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = false;
+        particles.forEach(p => {
+          if (p.alpha > 0) {
+            active = true;
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.4;
+            p.alpha -= 0.015;
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.alpha);
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+          }
+        });
+        if (active) requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    // Teams State
+    let teams = [
+      { id: 't1', name: 'Garudaku', emoji: '🦅', points: 0 },
+      { id: 't2', name: 'Harimau', emoji: '🐯', points: 0 },
+      { id: 't3', name: 'Elang', emoji: '🦅', points: 0 },
+      { id: 't4', name: 'Rajawali', emoji: '👑', points: 0 }
+    ];
+
+    function renderScorebar() {
+      const container = document.getElementById('teamScoresBar');
+      container.innerHTML = teams.map(t => `
+        <div class="team-badge">
+          <span>${t.emoji} ${t.name}:</span>
+          <span class="pts">${t.points} pt</span>
+        </div>
+      `).join('');
+    }
+    renderScorebar();
+
+    // Navigation
+    function hideAllViews() {
+      document.getElementById('mainMenuView').style.display = 'none';
+      document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
+    }
+
+    function showMainMenu() {
+      hideAllViews();
+      document.getElementById('mainMenuView').style.display = 'block';
+    }
+
+    function openGame(gameKey) {
+      playAudio('click');
+      hideAllViews();
+      if (gameKey === 'grandPrix') {
+        document.getElementById('grandPrixView').classList.add('active');
+        initGrandPrix();
+      } else if (gameKey === 'rodaKeberuntungan') {
+        document.getElementById('rodaKeberuntunganView').classList.add('active');
+        drawSpinWheel();
+        initWheelTeams();
+      } else if (gameKey === 'memoryMatch') {
+        document.getElementById('memoryMatchView').classList.add('active');
+        initMemoryMatch();
+      } else {
+        document.getElementById('genericGameView').classList.add('active');
+        initGenericGame(gameKey);
+      }
+    }
+
+    // Grand Prix Logic
+    const questions = [
+      { q: "Teknik dasar menerima servis bola voli paling efektif adalah...", opts: ["Smash", "Passing Bawah", "Block", "Servis Atas"], ans: 1 },
+      { q: "Berapa jumlah pemain sepak bola dalam satu tim di lapangan?", opts: ["9 Orang", "10 Orang", "11 Orang", "12 Orang"], ans: 2 },
+      { q: "Operan memantul ke lantai dalam olahraga basket disebut...", opts: ["Chest Pass", "Bounce Pass", "Overhead Pass", "Baseball Pass"], ans: 1 },
+      { q: "Start yang digunakan untuk nomor lari jarak pendek adalah...", opts: ["Start Berdiri", "Start Melayang", "Start Jongkok", "Start Duduk"], ans: 2 }
+    ];
+    let gpIdx = 0;
+    let gpSelectedTeam = null;
+
+    function initGrandPrix() {
+      gpIdx = 0;
+      renderGrandPrixQ();
+      renderGrandPrixTeams();
+    }
+
+    function renderGrandPrixQ() {
+      const q = questions[gpIdx % questions.length];
+      document.getElementById('gpQuestionText').innerText = `SOAL #${gpIdx + 1}: ${q.q}`;
+      document.getElementById('gpOptionsGrid').innerHTML = q.opts.map((o, i) => `
+        <div class="opt-card" id="gpOpt_${i}">
+          <span style="background:#FF6B1A; color:#FFF; width:36px; height:36px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;">${['A','B','C','D'][i]}</span>
+          ${o}
+        </div>
+      `).join('');
+    }
+
+    function renderGrandPrixTeams() {
+      document.getElementById('gpTeamPicker').innerHTML = teams.map(t => `
+        <button class="btn btn-ghost" style="font-size:18px; padding:10px 18px;" onclick="selectGPTeam('${t.id}')">${t.emoji} ${t.name}</button>
+      `).join('');
+    }
+
+    function selectGPTeam(id) {
+      playAudio('click');
+      gpSelectedTeam = id;
+      alert(`Tim ${teams.find(t=>t.id===id).name} dipilih untuk menjawab!`);
+    }
+
+    function triggerGrandPrixAction() {
+      playAudio('click');
+      const actions = [
+        '👏 Tepuk tangan 3x & berteriak YES!',
+        '🦶 Lompat jinjit 5x sambil memutar badan!',
+        '💪 3x Push-up bayangan dengan tersenyum!',
+        '🙌 High-Five dengan seluruh anggota tim!'
+      ];
+      const act = actions[Math.floor(Math.random() * actions.length)];
+      const banner = document.getElementById('gpActionBanner');
+      banner.style.display = 'block';
+      banner.innerText = `⚡ TANTANGAN: ${act}`;
+    }
+
+    function answerGrandPrix(isCorrect) {
+      if (!gpSelectedTeam) { alert('Pilih tim terlebih dahulu!'); return; }
+      const t = teams.find(team => team.id === gpSelectedTeam);
+      if (isCorrect) {
+        playAudio('correct'); triggerConfetti();
+        t.points += 10;
+      } else {
+        playAudio('wrong');
+        t.points = Math.max(0, t.points - 5);
+      }
+      renderScorebar();
+    }
+
+    function nextGrandPrixQ() {
+      gpIdx++;
+      gpSelectedTeam = null;
+      document.getElementById('gpActionBanner').style.display = 'none';
+      renderGrandPrixQ();
+    }
+
+    // Spin Wheel Logic
+    const wheelSegs = [
+      { label: 'Gerak Kaki', emoji: '🦶', color: '#FF6B35', p: 'Lakukan 5x langkah segitiga & 3x lompatan!' },
+      { label: 'Gerak Tangan', emoji: '🖐️', color: '#3498DB', p: 'Demo Passing Atas Voli 10x serentak!' },
+      { label: 'Kelincahan', emoji: '⚡', color: '#2ECC71', p: 'Lari zig-zag di tempat 15 detik!' },
+      { label: 'Kekuatan', emoji: '💪', color: '#9B59B6', p: 'Plank bersama tim 20 detik!' },
+      { label: 'Strategi', emoji: '🧠', color: '#FFC857', p: 'Sebutkan 3 perbedaan posisi penyerang & bek!' },
+      { label: 'Bonus Poin', emoji: '🎁', color: '#E74C3C', p: 'Sebutkan 3 peraturan resmi bola voli!' }
+    ];
+    let wheelAngle = 0;
+    let selectedWheelTeam = null;
+
+    function drawSpinWheel() {
+      const canvas = document.getElementById('spinWheel');
+      const ctx = canvas.getContext('2d');
+      const cx = 170, cy = 170, r = 160;
+      const angle = (Math.PI * 2) / wheelSegs.length;
+
+      ctx.clearRect(0,0,340,340);
+      wheelSegs.forEach((s, i) => {
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, i*angle, (i+1)*angle);
+        ctx.fillStyle = s.color;
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(i*angle + angle/2);
+        ctx.fillStyle = '#FFF';
+        ctx.font = 'bold 16px Poppins';
+        ctx.fillText(`${s.emoji} ${s.label}`, 50, 6);
+        ctx.restore();
+      });
+    }
+
+    function spinWheel() {
+      playAudio('click');
+      const randIdx = Math.floor(Math.random() * wheelSegs.length);
+      const angle = 360 / wheelSegs.length;
+      wheelAngle += 360 * 5 + (wheelSegs.length - randIdx) * angle;
+
+      const wheel = document.getElementById('spinWheel');
+      wheel.style.transform = `rotate(${wheelAngle}deg)`;
+
+      setTimeout(() => {
+        playAudio('correct'); triggerConfetti();
+        const seg = wheelSegs[randIdx];
+        document.getElementById('wheelResultBox').style.display = 'block';
+        document.getElementById('wheelSegTitle').innerText = `${seg.emoji} ${seg.label.toUpperCase()}`;
+        document.getElementById('wheelSegPrompt').innerText = seg.p;
+      }, 4000);
+    }
+
+    function initWheelTeams() {
+      document.getElementById('wheelTeamPicker').innerHTML = teams.map(t => `
+        <button class="btn btn-ghost" style="font-size:16px;" onclick="selectedWheelTeam='${t.id}'">${t.emoji} ${t.name}</button>
+      `).join('');
+    }
+
+    function awardWheelPoints(pts) {
+      if (!selectedWheelTeam) { alert('Pilih tim!'); return; }
+      const t = teams.find(team => team.id === selectedWheelTeam);
+      t.points += pts;
+      playAudio('correct'); triggerConfetti();
+      renderScorebar();
+    }
+
+    // Memory Match Theory Logic
+    const memPairs = [
+      { t: 'Passing Bawah', e: '⬇️', q: 'Jelaskan posisi kaki, lutut ditekuk, dan perkenaan lengan bawah saat melakukan Passing Bawah Voli!' },
+      { t: 'Smash Voli', e: '💥', q: 'Sebutkan 4 tahapan utama gerakan Smash Voli (Awalan, Tolakan, Pukulan, Mendarat)!' },
+      { t: 'Dribble Basket', e: '⛹️‍♂️', q: 'Sebutkan 2 jenis kesalahan utama saat mendribble bola basket (Traveling & Double)!' },
+      { t: 'Shoot Basket', e: '🎯', q: 'Jelaskan kepanjangan dari rumus BEEF dalam shooting basket (Balance, Eyes, Elbow, Follow through)!' },
+      { t: 'Servis Atas', e: '💨', q: 'Berapa cm idealnya bola dilambungkan di atas kepala sebelum dipukul pada servis atas?' },
+      { t: 'Block Voli', e: '🛡️', q: 'Jelaskan tujuan utama gerakan Block dan aturan pelanggaran menyentuh net (touch net)!' },
+      { t: 'Heading', e: '🗣️', q: 'Mengapa menyundul bola wajib menggunakan DAHI dan bukan ubun-ubun atau samping kepala?' },
+      { t: 'Lay-up', e: '🦘', q: 'Jelaskan berapa jumlah langkah kaki yang diperbolehkan sebelum melompat pada Lay-up Shoot!' }
+    ];
+    let memCards = [];
+    let memFlipped = [];
+    let activeMemTeamIdx = 0;
+
+    function initMemoryMatch() {
+      let deck = [];
+      memPairs.forEach((p, i) => {
+        deck.push({ id: i*2, pairId: i, ...p, isFlipped: false, isMatched: false });
+        deck.push({ id: i*2+1, pairId: i, ...p, isFlipped: false, isMatched: false });
+      });
+      memCards = deck.sort(() => Math.random() - 0.5);
+      memFlipped = [];
+      renderMemoryGrid();
+    }
+
+    function renderMemoryGrid() {
+      const grid = document.getElementById('memGrid');
+      grid.innerHTML = memCards.map((c, i) => `
+        <div class="mem-card ${c.isFlipped ? 'flipped' : ''} ${c.isMatched ? 'matched' : ''}" onclick="flipMemCard(${c.id})">
+          ${c.isFlipped || c.isMatched ? `<span>${c.e}</span><span style="font-size:16px;">${c.t}</span>` : `❓ #${i+1}`}
+        </div>
+      `).join('');
+    }
+
+    function flipMemCard(id) {
+      const card = memCards.find(c => c.id === id);
+      if (card.isFlipped || card.isMatched || memFlipped.length >= 2) return;
+
+      playAudio('click');
+      card.isFlipped = true;
+      memFlipped.push(card);
+      renderMemoryGrid();
+
+      if (memFlipped.length === 2) {
+        if (memFlipped[0].pairId === memFlipped[1].pairId) {
+          playAudio('correct'); triggerConfetti();
+          document.getElementById('memDemoModal').style.display = 'block';
+          document.getElementById('memDemoTitle').innerText = `🎉 PASANGAN COCOK: ${memFlipped[0].t.toUpperCase()}!`;
+          document.getElementById('memDemoQuestion').innerText = `"${memFlipped[0].q}"`;
+        } else {
+          playAudio('wrong');
+          setTimeout(() => {
+            memFlipped[0].isFlipped = false;
+            memFlipped[1].isFlipped = false;
+            memFlipped = [];
+            activeMemTeamIdx++;
+            document.getElementById('memTurnBanner').innerText = `GILIRAN: TIM ${teams[activeMemTeamIdx % teams.length].name.toUpperCase()}`;
+            renderMemoryGrid();
+          }, 1200);
+        }
+      }
+    }
+
+    function confirmMemMatch(success) {
+      if (success) {
+        teams[activeMemTeamIdx % teams.length].points += 5;
+        renderScorebar();
+        memFlipped.forEach(c => c.isMatched = true);
+      } else {
+        memFlipped.forEach(c => c.isFlipped = false);
+      }
+      document.getElementById('memDemoModal').style.display = 'none';
+      memFlipped = [];
+      activeMemTeamIdx++;
+      document.getElementById('memTurnBanner').innerText = `GILIRAN: TIM ${teams[activeMemTeamIdx % teams.length].name.toUpperCase()}`;
+      renderMemoryGrid();
+    }
+
+    // Generic Game Fallback
+    function initGenericGame(name) {
+      document.getElementById('genericTitle').innerText = `🎮 ${name.toUpperCase()}`;
+      document.getElementById('genericQText').innerText = `Pertanyaan simulasi mode ${name}`;
+      document.getElementById('genericOptGrid').innerHTML = `
+        <div class="opt-card">A. Pilihan 1</div>
+        <div class="opt-card">B. Pilihan 2</div>
+      `;
+    }
+    function nextGenericQ() { playAudio('click'); alert('Soal berikutnya!'); }
+  </script>
+</body>
+</html>
