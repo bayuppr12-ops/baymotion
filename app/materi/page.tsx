@@ -1,9 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { materials } from '@/data/materials';
 
 export default function MateriPage() {
+  const [selectedMaterialId, setSelectedMaterialId] = useState<string>(materials[0].id);
+  const activeMaterial = materials.find((m) => m.id === selectedMaterialId) || materials[0];
+
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px 80px', color: '#FFFFFF', position: 'relative', zIndex: 1 }}>
       {/* Header */}
@@ -47,38 +51,18 @@ export default function MateriPage() {
             key={mat.id}
             style={{
               background: '#242424',
-              border: `1.5px solid ${mat.isPriority ? '#FF6B1A' : '#3F3F46'}`,
+              border: '1.5px solid #3F3F46',
               borderRadius: '24px',
               padding: '28px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              boxShadow: mat.isPriority ? '0 8px 25px rgba(255, 107, 26, 0.25)' : '0 4px 20px rgba(0, 0, 0, 0.4)',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
               transition: 'all 0.3s ease',
               position: 'relative',
               overflow: 'hidden',
             }}
           >
-            {mat.isPriority && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '16px',
-                  right: '16px',
-                  background: 'rgba(255, 200, 87, 0.2)',
-                  border: '1px solid #FFC857',
-                  color: '#FFC857',
-                  borderRadius: '100px',
-                  padding: '4px 12px',
-                  fontFamily: 'Poppins',
-                  fontWeight: 800,
-                  fontSize: '0.72rem',
-                }}
-              >
-                ⭐ PRIORITAS UJIAN
-              </div>
-            )}
-
             <div>
               <div style={{ fontSize: '3.5rem', marginBottom: '12px' }}>{mat.emoji}</div>
               <h2 style={{ fontFamily: 'Poppins', fontWeight: 900, fontSize: '1.6rem', color: '#FFFFFF', marginBottom: '8px' }}>
@@ -94,7 +78,7 @@ export default function MateriPage() {
                   📖 {mat.subMaterials.length} SUB-MATERI TERSEDIA:
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  {mat.subMaterials.slice(0, 4).map((sub, i) => (
+                  {mat.subMaterials.slice(0, 4).map((sub) => (
                     <div key={sub.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.84rem', color: '#FFFFFF' }}>
                       <span>{sub.emoji}</span>
                       <span style={{ fontWeight: 600 }}>{sub.title}</span>
@@ -109,7 +93,7 @@ export default function MateriPage() {
               </div>
             </div>
 
-            <Link href={mat.id === 'bola-voli' ? '/materi/bola-voli' : `/materi/${mat.id}`} style={{ textDecoration: 'none' }}>
+            <Link href={`/materi/${mat.id}`} style={{ textDecoration: 'none' }}>
               <button className="btn-primary" style={{ width: '100%', padding: '12px', fontSize: '0.95rem' }}>
                 🚀 Buka Modul {mat.title} →
               </button>
@@ -118,7 +102,7 @@ export default function MateriPage() {
         ))}
       </div>
 
-      {/* Detail List Sub-Materi Utama Bola Voli (Expanded) */}
+      {/* Interactive Material Explorer across All Materials */}
       <div
         style={{
           background: '#242424',
@@ -128,21 +112,64 @@ export default function MateriPage() {
           boxShadow: '0 8px 30px rgba(0, 0, 0, 0.5)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-          <span style={{ fontSize: '2.5rem' }}>🏐</span>
-          <div>
-            <h2 style={{ fontFamily: 'Poppins', fontWeight: 900, fontSize: '1.8rem', color: '#FFFFFF', margin: 0 }}>
-              Daftar Lengkap 13 Sub-Materi Bola Voli
-            </h2>
-            <div style={{ color: '#D1D5DB', fontSize: '0.9rem' }}>
-              Klik salah satu sub-materi untuk langsung mempelajari peragaannya!
-            </div>
+        <div style={{ marginBottom: '24px' }}>
+          <div style={{ fontFamily: 'Poppins', fontWeight: 800, fontSize: '0.85rem', color: '#FF6B1A', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '6px' }}>
+            PENJELAJAH SUB-MATERI
+          </div>
+          <h2 style={{ fontFamily: 'Poppins', fontWeight: 900, fontSize: '1.8rem', color: '#FFFFFF', margin: 0, marginBottom: '8px' }}>
+            Daftar Lengkap Sub-Materi PJOK
+          </h2>
+          <div style={{ color: '#D1D5DB', fontSize: '0.92rem' }}>
+            Pilih cabang olahraga di bawah untuk melihat rincian topik dan langsung menuju materi terkait!
           </div>
         </div>
 
+        {/* Tab Selection */}
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '28px' }}>
+          {materials.map((mat) => {
+            const isActive = mat.id === selectedMaterialId;
+            return (
+              <button
+                key={mat.id}
+                onClick={() => setSelectedMaterialId(mat.id)}
+                style={{
+                  padding: '10px 18px',
+                  borderRadius: '12px',
+                  border: `2px solid ${isActive ? '#FF6B1A' : '#3F3F46'}`,
+                  background: isActive ? 'rgba(255, 107, 26, 0.2)' : '#171717',
+                  color: isActive ? '#FF9F43' : '#FFFFFF',
+                  fontFamily: 'Poppins, sans-serif',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                <span>{mat.emoji}</span>
+                <span>{mat.title}</span>
+                <span
+                  style={{
+                    background: isActive ? '#FF6B1A' : '#2A2A2E',
+                    color: '#FFFFFF',
+                    fontSize: '0.72rem',
+                    padding: '2px 6px',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {mat.subMaterials.length}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Sub-materials Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '14px' }}>
-          {materials[0].subMaterials.map((sub, idx) => (
-            <Link key={sub.id} href={`/materi/bola-voli#${sub.id}`} style={{ textDecoration: 'none' }}>
+          {activeMaterial.subMaterials.map((sub, idx) => (
+            <Link key={sub.id} href={`/materi/${activeMaterial.id}#${sub.id}`} style={{ textDecoration: 'none' }}>
               <div
                 style={{
                   background: '#171717',

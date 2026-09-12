@@ -5,8 +5,8 @@ import Link from 'next/link';
 const games = [
   {
     id: 'quiz-battle',
-    title: 'Volley Quiz Battle',
-    desc: 'Kuis kelompok dengan pertanyaan pilihan ganda. Jawab cepat dan benar untuk menang!',
+    title: 'Quiz Battle',
+    desc: 'Kuis kelompok interaktif per materi pembelajaran PJOK. Pilih materi dan uji kekompakan tim!',
     emoji: '🧠',
     color: '#FF6B1A',
     tagBg: 'rgba(255, 107, 26, 0.25)',
@@ -258,7 +258,7 @@ export default function GamesPage() {
             Tips untuk Guru
           </div>
           <div style={{ color: '#D1D5DB', fontSize: '0.94rem', lineHeight: 1.7 }}>
-            Kombinasikan beberapa game untuk sesi pembelajaran yang lebih seru! Mulai dengan Volley Quiz Battle untuk mengecek pemahaman, lanjutkan dengan Siapa Cepat untuk menguji kecepatan merespons, dan tutup dengan Sports Charades untuk sesi yang menyenangkan.
+            Kombinasikan beberapa game untuk sesi pembelajaran yang lebih seru! Mulai dengan Quiz Battle untuk mengecek pemahaman, lanjutkan dengan Siapa Cepat untuk menguji kecepatan merespons, dan tutup dengan Sports Charades untuk sesi yang menyenangkan.
           </div>
         </div>
       </div>

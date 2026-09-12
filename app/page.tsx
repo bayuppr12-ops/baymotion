@@ -343,11 +343,12 @@ export default function HomePage() {
 
             <div>
               {[
-                { number: '01', emoji: '🏐', title: 'Bola Voli (Modul Utama)', desc: '13 Sub-Materi: Passing, Service, Smash, Block, Peraturan', href: '/materi/bola-voli' },
+                { number: '01', emoji: '🏐', title: 'Bola Voli', desc: 'Passing, Servis, Smash, Block, Peraturan & Formasi', href: '/materi/bola-voli' },
                 { number: '02', emoji: '⚽', title: 'Sepak Bola', desc: 'Passing, Control, Dribbling, Heading, Shooting, & Offside', href: '/materi/sepak-bola' },
                 { number: '03', emoji: '🏀', title: 'Bola Basket', desc: 'Chest pass, Dribble, Lay-up, Shooting BEEF, & Pivot', href: '/materi/bola-basket' },
                 { number: '04', emoji: '🏃', title: 'Atletik (Mother of Sports)', desc: 'Sprint, Start Jongkok, Estafet, Lompat Jauh, Tolak Peluru', href: '/materi/atletik' },
                 { number: '05', emoji: '🤸', title: 'Senam Lantai & Ritmik', desc: 'Guling Depan, Guling Belakang, Sikap Lilin, Kayang, Meroda', href: '/materi/senam' },
+                { number: '06', emoji: '💪', title: 'Kebugaran Jasmani', desc: 'Daya Tahan, Kekuatan, Kelentukan, Kelincahan, & TKJI', href: '/materi/kebugaran' },
               ].map((item) => (
                 <Link key={item.number} href={item.href} style={{ textDecoration: 'none' }}>
                   <div className="editorial-hairline" style={{ display: 'flex', gap: '16px', alignItems: 'center', cursor: 'pointer' }}>

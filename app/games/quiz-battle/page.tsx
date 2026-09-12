@@ -2,7 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { useGameStore } from '@/store/useGameStore';
-import { volleyQuizQuestions } from '@/data/questions';
+import { Question } from '@/types';
+import {
+  soccerQuizQuestions,
+  volleyQuizQuestions,
+  basketballQuizQuestions,
+  athleticsQuizQuestions,
+  gymnasticsQuizQuestions,
+  fitnessQuizQuestions,
+  quizQuestions,
+} from '@/data/questions';
 import { useToast } from '@/components/Toast';
 import Link from 'next/link';
 import { QuestionTimer } from '@/components/QuestionTimer';
@@ -10,10 +19,79 @@ import { RandomTeamPicker } from '@/components/RandomTeamPicker';
 
 type Phase = 'setup' | 'question' | 'reveal' | 'finished';
 
+interface QuizBattleCategory {
+  key: string;
+  title: string;
+  emoji: string;
+  color: string;
+  desc: string;
+  questions: Question[];
+}
+
+const quizCategories: QuizBattleCategory[] = [
+  {
+    key: 'sepak-bola',
+    title: 'Sepak Bola',
+    emoji: '⚽',
+    color: '#2ECC71',
+    desc: 'Passing kaki dalam/punggung, heading dahi, throw-in sah, offside, & kiper',
+    questions: soccerQuizQuestions,
+  },
+  {
+    key: 'bola-voli',
+    title: 'Bola Voli',
+    emoji: '🏐',
+    color: '#FF6B35',
+    desc: 'Passing bawah/atas, servis, smash, block, posisi libero, & aturan rally point',
+    questions: volleyQuizQuestions,
+  },
+  {
+    key: 'bola-basket',
+    title: 'Bola Basket',
+    emoji: '🏀',
+    color: '#E67E22',
+    desc: 'Chest pass, layup 2 langkah, shooting BEEF, pivot kaki tumpu, & rebound',
+    questions: basketballQuizQuestions,
+  },
+  {
+    key: 'atletik',
+    title: 'Atletik',
+    emoji: '🏃',
+    color: '#3498DB',
+    desc: 'Start jongkok, lari sprint, estafet serah terima tongkat, & lompat jauh 4 fase',
+    questions: athleticsQuizQuestions,
+  },
+  {
+    key: 'senam',
+    title: 'Senam Lantai',
+    emoji: '🤸',
+    color: '#9B59B6',
+    desc: 'Guling depan/belakang tengkuk, sikap lilin, kayang tumpuan 4 titik, & meroda',
+    questions: gymnasticsQuizQuestions,
+  },
+  {
+    key: 'kebugaran',
+    title: 'Kebugaran Jasmani',
+    emoji: '💪',
+    color: '#E74C3C',
+    desc: 'Push-up, sit-up, shuttle run, peregangan statis/dinamis, & 5 item tes TKJI',
+    questions: fitnessQuizQuestions,
+  },
+  {
+    key: 'all',
+    title: 'Semua Materi (Campuran)',
+    emoji: '🌟',
+    color: '#FF9F43',
+    desc: 'Tantangan gabungan dari seluruh materi olahraga PJOK untuk uji kompetensi kelas',
+    questions: quizQuestions,
+  },
+];
+
 export default function QuizBattlePage() {
   const { teams, addPoints } = useGameStore();
   const [mounted, setMounted] = useState(false);
   const [phase, setPhase] = useState<Phase>('setup');
+  const [selectedCategoryKey, setSelectedCategoryKey] = useState<string>('sepak-bola');
   const [currentQ, setCurrentQ] = useState(0);
   const [isTimeUp, setIsTimeUp] = useState(false);
 
@@ -27,7 +105,11 @@ export default function QuizBattlePage() {
   const [sessionScores, setSessionScores] = useState<Record<string, number>>({});
 
   const { showToast, ToastContainer } = useToast();
-  const questions = volleyQuizQuestions;
+
+  const activeCategory =
+    quizCategories.find((c) => c.key === selectedCategoryKey) || quizCategories[0];
+  const questions = activeCategory.questions;
+  const question = questions[currentQ] || questions[0];
 
   useEffect(() => {
     useGameStore.persist.rehydrate();
@@ -42,14 +124,24 @@ export default function QuizBattlePage() {
     }
   }, [mounted, teams]);
 
-  const question = questions[currentQ];
-  const sortedTeams = [...teams].sort((a, b) => (sessionScores[b.id] || 0) - (sessionScores[a.id] || 0));
+  const sortedTeams = [...teams].sort(
+    (a, b) => (sessionScores[b.id] || 0) - (sessionScores[a.id] || 0)
+  );
 
   const handleSelectTeamAnswer = (teamId: string, optionIndex: number) => {
     setTeamAnswers((prev) => ({
       ...prev,
       [teamId]: prev[teamId] === optionIndex ? null : optionIndex,
     }));
+  };
+
+  const handleStartQuiz = () => {
+    setCurrentQ(0);
+    setTeamAnswers({});
+    setBonusAwarded({});
+    setIsTimeUp(false);
+    setPhase('question');
+    showToast(`🚀 Memulai Quiz Battle: ${activeCategory.emoji} ${activeCategory.title}!`, 'success');
   };
 
   const handleReveal = () => {
@@ -60,7 +152,7 @@ export default function QuizBattlePage() {
       const teamAns = teamAnswers[team.id];
       if (teamAns === question.correctIndex) {
         correctCount++;
-        addPoints(team.id, 10, `Jawaban benar quiz: Soal ${currentQ + 1}`, 'quiz');
+        addPoints(team.id, 10, `Jawaban benar kuis ${activeCategory.title}: Soal ${currentQ + 1}`, 'quiz');
         setSessionScores((prev) => ({
           ...prev,
           [team.id]: (prev[team.id] || 0) + 10,
@@ -78,7 +170,7 @@ export default function QuizBattlePage() {
   const handleBonus = (teamId: string) => {
     if (bonusAwarded[teamId]) return;
     const team = teams.find((t) => t.id === teamId);
-    addPoints(teamId, 5, `Bonus penjelasan jawaban: Soal ${currentQ + 1}`, 'bonus');
+    addPoints(teamId, 5, `Bonus penjelasan jawaban (${activeCategory.title}): Soal ${currentQ + 1}`, 'bonus');
     setSessionScores((prev) => ({ ...prev, [teamId]: (prev[teamId] || 0) + 5 }));
     setBonusAwarded((prev) => ({ ...prev, [teamId]: true }));
     showToast(`⭐ ${team?.name} mendapat bonus 5 poin!`, 'info');
@@ -103,44 +195,146 @@ export default function QuizBattlePage() {
   if (!mounted) return null;
 
   const letters = ['A', 'B', 'C', 'D'];
-  const answeredTeamCount = Object.values(teamAnswers).filter((ans) => ans !== null && ans !== undefined).length;
+  const answeredTeamCount = Object.values(teamAnswers).filter(
+    (ans) => ans !== null && ans !== undefined
+  ).length;
 
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '24px 20px 80px', color: '#FFFFFF', position: 'relative', zIndex: 1 }}>
       <ToastContainer />
+
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px', flexWrap: 'wrap' }}>
         <Link href="/games" style={{ textDecoration: 'none' }}>
-          <button className="btn-ghost" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>← Kembali</button>
+          <button className="btn-ghost" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
+            ← Kembali ke Games
+          </button>
         </Link>
         <div>
           <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: '1.8rem', color: '#FFFFFF', margin: 0 }}>
-            🧠 Volley Quiz Battle
+            🧠 Quiz Battle
           </h1>
-          <div style={{ color: '#D1D5DB', fontSize: '0.9rem' }}>Kuis kelompok interaktif (Semua Kelompok Menjawab)</div>
+          <div style={{ color: '#D1D5DB', fontSize: '0.9rem' }}>
+            Kuis kelompok interaktif per materi pembelajaran PJOK (Semua Kelompok Menjawab)
+          </div>
         </div>
-        {phase === 'question' || phase === 'reveal' ? (
+
+        {(phase === 'question' || phase === 'reveal') && (
           <div
             style={{
               marginLeft: 'auto',
               background: '#171717',
-              border: '1px solid rgba(255, 107, 26, 0.4)',
+              border: `1.5px solid ${activeCategory.color}`,
               borderRadius: '100px',
-              padding: '6px 16px',
+              padding: '6px 18px',
               fontFamily: 'Poppins, sans-serif',
-              fontWeight: 700,
+              fontWeight: 800,
               fontSize: '0.9rem',
-              color: '#FF9F43',
+              color: '#FFFFFF',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
             }}
           >
-            Soal {currentQ + 1} / {questions.length}
+            <span>{activeCategory.emoji}</span>
+            <span style={{ color: activeCategory.color }}>{activeCategory.title}</span>
+            <span style={{ color: '#71717A' }}>•</span>
+            <span>Soal {currentQ + 1} / {questions.length}</span>
           </div>
-        ) : null}
+        )}
       </div>
 
       {/* SETUP PHASE */}
       {phase === 'setup' && (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          {/* Sub-Material Selection Card */}
+          <div
+            style={{
+              background: '#242424',
+              border: '1.5px solid #3F3F46',
+              borderRadius: '24px',
+              padding: '32px',
+              boxShadow: '0 8px 30px rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+              <span style={{ fontSize: '1.8rem' }}>🎯</span>
+              <div>
+                <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: '1.4rem', color: '#FFFFFF', margin: 0 }}>
+                  Pilih Sub-Materi Kuis
+                </h2>
+                <div style={{ color: '#D1D5DB', fontSize: '0.88rem' }}>
+                  Pilih materi pembelajaran di bawah ini. Soal kuis yang muncul akan <strong>100% khusus seputar materi yang Anda pilih</strong>:
+                </div>
+              </div>
+            </div>
+
+            {/* Category Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '14px', marginTop: '20px' }}>
+              {quizCategories.map((cat) => {
+                const isSelected = cat.key === selectedCategoryKey;
+                return (
+                  <div
+                    key={cat.key}
+                    onClick={() => setSelectedCategoryKey(cat.key)}
+                    style={{
+                      background: isSelected ? 'rgba(255, 107, 26, 0.12)' : '#171717',
+                      border: `2px solid ${isSelected ? '#FF6B1A' : '#3F3F46'}`,
+                      borderRadius: '16px',
+                      padding: '18px 20px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      position: 'relative',
+                      boxShadow: isSelected ? '0 4px 20px rgba(255, 107, 26, 0.25)' : 'none',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ fontSize: '1.8rem' }}>{cat.emoji}</span>
+                        <div style={{ fontFamily: 'Poppins', fontWeight: 800, fontSize: '1.05rem', color: isSelected ? '#FF9F43' : '#FFFFFF' }}>
+                          {cat.title}
+                        </div>
+                      </div>
+                      <span
+                        style={{
+                          background: isSelected ? '#FF6B1A' : '#2A2A2E',
+                          color: '#FFFFFF',
+                          borderRadius: '100px',
+                          padding: '3px 10px',
+                          fontSize: '0.74rem',
+                          fontFamily: 'Poppins',
+                          fontWeight: 700,
+                        }}
+                      >
+                        {cat.questions.length} Soal
+                      </span>
+                    </div>
+                    <div style={{ color: '#A1A1AA', fontSize: '0.82rem', lineHeight: 1.4 }}>
+                      {cat.desc}
+                    </div>
+                    {isSelected && (
+                      <div
+                        style={{
+                          marginTop: '10px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          color: '#FF6B1A',
+                          fontFamily: 'Poppins',
+                          fontWeight: 800,
+                          fontSize: '0.78rem',
+                        }}
+                      >
+                        ✓ Sub-Materi Terpilih
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Game Rules & Teams Setup Card */}
           <div
             style={{
               background: '#242424',
@@ -148,24 +342,25 @@ export default function QuizBattlePage() {
               borderRadius: '24px',
               padding: '32px',
               textAlign: 'center',
-              marginBottom: '32px',
               boxShadow: '0 8px 30px rgba(0, 0, 0, 0.5)',
             }}
           >
-            <div style={{ fontSize: '4rem', marginBottom: '16px' }}>🧠</div>
-            <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: '2rem', color: '#FFFFFF', marginBottom: '12px' }}>
-              Cara Bermain
+            <div style={{ fontSize: '3rem', marginBottom: '12px' }}>{activeCategory.emoji}</div>
+            <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: '1.8rem', color: '#FFFFFF', marginBottom: '10px' }}>
+              Quiz Battle: {activeCategory.title}
             </h2>
-            <div style={{ color: '#D1D5DB', fontSize: '0.95rem', lineHeight: 1.8, maxWidth: '550px', margin: '0 auto', marginBottom: '24px' }}>
-              1. Pertanyaan ditampilkan di layar proyektor<br />
-              2. <strong>Semua kelompok</strong> berdiskusi dan memberikan jawabannya (A, B, C, atau D)<br />
-              3. Guru menginput/memilih jawaban masing-masing kelompok pada layar<br />
-              4. Klik <strong>"Buka & Cek Jawaban"</strong><br />
-              5. Kelompok yang jawabannya <strong>BENAR</strong> otomatis mendapat <strong style={{ color: '#FF6B1A' }}>+10 poin</strong> (+5 bonus opsional jika menjelaskan)
+            <div style={{ color: '#D1D5DB', fontSize: '0.94rem', lineHeight: 1.8, maxWidth: '580px', margin: '0 auto', marginBottom: '24px' }}>
+              1. Pertanyaan seputar <strong>{activeCategory.title}</strong> akan ditampilkan di layar satu per satu.<br />
+              2. <strong>Semua kelompok</strong> berdiskusi dan memberikan jawabannya (A, B, C, atau D).<br />
+              3. Guru menginput jawaban masing-masing kelompok pada layar proyektor.<br />
+              4. Klik <strong>"Buka & Cek Jawaban"</strong> untuk mengungkap jawaban benar.<br />
+              5. Kelompok yang benar otomatis mendapat <strong style={{ color: '#FF6B1A' }}>+10 poin</strong> (+5 bonus opsional jika aktif menjelaskan).
             </div>
-            <div style={{ marginBottom: '24px' }}>
+
+            {/* Registered Teams */}
+            <div style={{ marginBottom: '28px' }}>
               <div style={{ fontFamily: 'Poppins', fontWeight: 700, color: '#D1D5DB', marginBottom: '12px', fontSize: '0.85rem' }}>
-                KELOMPOK YANG TERDAFTAR:
+                KELOMPOK YANG AKAN BERTANDING:
               </div>
               <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
                 {teams.map((team) => (
@@ -175,7 +370,7 @@ export default function QuizBattlePage() {
                       background: '#171717',
                       border: '1px solid #3F3F46',
                       borderRadius: '12px',
-                      padding: '10px 20px',
+                      padding: '10px 18px',
                       fontFamily: 'Poppins, sans-serif',
                       fontWeight: 700,
                       color: '#FFFFFF',
@@ -190,18 +385,24 @@ export default function QuizBattlePage() {
                 ))}
               </div>
             </div>
+
             {teams.length === 0 ? (
               <div style={{ color: '#EF4444', marginBottom: '20px', fontFamily: 'Poppins', fontWeight: 700 }}>
-                ⚠️ Belum ada kelompok. Buat kelompok di Mode Guru dulu!
+                ⚠️ Belum ada kelompok. Buat kelompok di Mode Guru terlebih dahulu!
               </div>
             ) : null}
+
             <button
               className="btn-primary"
-              onClick={() => setPhase('question')}
+              onClick={handleStartQuiz}
               disabled={teams.length === 0}
-              style={{ fontSize: '1.1rem', padding: '14px 40px', opacity: teams.length === 0 ? 0.5 : 1 }}
+              style={{
+                fontSize: '1.1rem',
+                padding: '14px 44px',
+                opacity: teams.length === 0 ? 0.5 : 1,
+              }}
             >
-              🚀 Mulai Quiz Battle!
+              🚀 Mulai Quiz Battle ({activeCategory.title})
             </button>
           </div>
         </div>
@@ -227,7 +428,7 @@ export default function QuizBattlePage() {
                 background: 'rgba(255, 107, 26, 0.25)',
                 border: '1px solid #FF6B1A',
                 borderRadius: '100px',
-                padding: '4px 16px',
+                padding: '4px 18px',
                 display: 'inline-block',
                 marginBottom: '16px',
                 color: '#FF9F43',
@@ -237,7 +438,7 @@ export default function QuizBattlePage() {
                 textTransform: 'uppercase',
               }}
             >
-              {question.category}
+              {activeCategory.emoji} {question.category || activeCategory.title}
             </div>
 
             {/* Countdown Timer */}
@@ -266,14 +467,15 @@ export default function QuizBattlePage() {
             </h2>
 
             {isTimeUp && phase === 'question' && (
-              <div style={{
-                fontSize: '1.2rem',
-                fontFamily: 'Poppins',
-                fontWeight: 900,
-                color: '#FF4444',
-                animation: 'pulse 1s infinite',
-                marginTop: '16px'
-              }}>
+              <div
+                style={{
+                  fontSize: '1.15rem',
+                  fontFamily: 'Poppins',
+                  fontWeight: 900,
+                  color: '#FF4444',
+                  marginTop: '16px',
+                }}
+              >
                 ⏰ WAKTU HABIS! SILAKAN INPUT JAWABAN KELOMPOK
               </div>
             )}
@@ -281,7 +483,7 @@ export default function QuizBattlePage() {
 
           {/* Options Grid Reference */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '12px', marginBottom: '32px' }}>
-            {question.options.map((option, idx) => {
+            {question.options.map((option: string, idx: number) => {
               const isCorrect = phase === 'reveal' && idx === question.correctIndex;
 
               return (
@@ -409,7 +611,7 @@ export default function QuizBattlePage() {
                                 borderRadius: '10px',
                                 border: `2px solid ${isSelected ? '#FF6B1A' : '#3F3F46'}`,
                                 background: isSelected ? '#FF6B1A' : '#171717',
-                                color: isSelected ? '#FFFFFF' : '#FFFFFF',
+                                color: '#FFFFFF',
                                 fontFamily: 'Poppins, sans-serif',
                                 fontWeight: 900,
                                 fontSize: '1rem',
@@ -543,7 +745,7 @@ export default function QuizBattlePage() {
             )}
             {phase === 'reveal' && (
               <button className="btn-primary" onClick={nextQuestion} style={{ padding: '14px 32px', fontSize: '1rem' }}>
-                ⏭ Soal Berikutnya →
+                ⏭ Soal Berikutnya ({currentQ + 2 <= questions.length ? `${currentQ + 2}/${questions.length}` : 'Selesai'}) →
               </button>
             )}
           </div>
@@ -564,10 +766,30 @@ export default function QuizBattlePage() {
             }}
           >
             <div style={{ fontSize: '4rem', marginBottom: '16px' }}>🎉</div>
-            <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: '2rem', color: '#FFFFFF', marginBottom: '24px' }}>
+            <div
+              style={{
+                display: 'inline-block',
+                background: 'rgba(255, 107, 26, 0.25)',
+                border: '1px solid #FF6B1A',
+                borderRadius: '100px',
+                padding: '4px 18px',
+                color: '#FF9F43',
+                fontFamily: 'Poppins',
+                fontWeight: 800,
+                fontSize: '0.85rem',
+                marginBottom: '12px',
+              }}
+            >
+              {activeCategory.emoji} KUIS {activeCategory.title.toUpperCase()}
+            </div>
+            <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: '2rem', color: '#FFFFFF', marginBottom: '8px' }}>
               Quiz Battle Selesai!
             </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '400px', margin: '0 auto' }}>
+            <p style={{ color: '#D1D5DB', fontSize: '0.95rem', marginBottom: '24px' }}>
+              Seluruh pertanyaan materi {activeCategory.title} telah selesai dimainkan. Berikut perolehan poin tim:
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '440px', margin: '0 auto' }}>
               {sortedTeams.map((team, i) => (
                 <div
                   key={team.id}
@@ -592,27 +814,53 @@ export default function QuizBattlePage() {
               ))}
             </div>
           </div>
+
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button
               className="btn-primary"
               onClick={() => {
-                setPhase('setup');
                 setCurrentQ(0);
                 setSessionScores({});
                 setTeamAnswers({});
                 setBonusAwarded({});
+                setIsTimeUp(false);
+                setPhase('question');
               }}
             >
-              🔄 Main Lagi
+              🔄 Main Lagi Materi Ini
+            </button>
+            <button
+              className="btn-secondary"
+              onClick={() => {
+                setPhase('setup');
+                setCurrentQ(0);
+                setTeamAnswers({});
+                setBonusAwarded({});
+                setIsTimeUp(false);
+              }}
+              style={{
+                background: '#2A2A2E',
+                color: '#FFFFFF',
+                border: '1px solid #3F3F46',
+                borderRadius: '12px',
+                padding: '12px 24px',
+                fontFamily: 'Poppins',
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >
+              📚 Ganti Sub-Materi Lain
             </button>
             <Link href="/ranking" style={{ textDecoration: 'none' }}>
-              <button className="btn-secondary">🏆 Lihat Ranking</button>
+              <button className="btn-secondary" style={{ padding: '12px 24px' }}>
+                🏆 Lihat Ranking
+              </button>
             </Link>
           </div>
         </div>
       )}
 
-      {/* Live Scoreboard */}
+      {/* Live Scoreboard Floating Widget */}
       {(phase === 'question' || phase === 'reveal') && (
         <div
           style={{
@@ -630,7 +878,7 @@ export default function QuizBattlePage() {
           }}
         >
           <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: '0.8rem', color: '#D1D5DB', marginBottom: '10px' }}>
-            SKOR SESI INI
+            SKOR SESI ({activeCategory.emoji} {activeCategory.title})
           </div>
           {sortedTeams.map((team) => (
             <div key={team.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>

@@ -35,6 +35,7 @@ export interface Video {
   material: string;
   subMaterial: string;
   reflectionPrompt: string;
+  imageUrl?: string;
 }
 
 export interface SubMaterial {
@@ -46,6 +47,7 @@ export interface SubMaterial {
   practice: string;
   emoji: string;
   category?: 'teknik' | 'lapangan' | 'teori';
+  imageUrl?: string;
 }
 
 export interface Material {

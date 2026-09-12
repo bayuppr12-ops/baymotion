@@ -7,7 +7,7 @@ import { materials } from '@/data/materials';
 
 function getYouTubeId(url: string): string | null {
   if (!url) return null;
-  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+  const match = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([^&\n?#]+)/);
   return match ? match[1] : null;
 }
 
@@ -151,6 +151,26 @@ function VideoPageContent() {
                 style={{ width: '100%', height: '100%', border: 'none' }}
                 allowFullScreen
               />
+            ) : selectedVideo.imageUrl ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: '#171717',
+                  position: 'relative',
+                  padding: '12px',
+                }}
+              >
+                <img
+                  src={selectedVideo.imageUrl}
+                  alt={selectedVideo.title}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '12px' }}
+                />
+              </div>
             ) : (
               <div
                 style={{

@@ -24,7 +24,7 @@ export const materials: Material[] = [
     description: 'Permainan tim yang seru dan penuh strategi!',
     emoji: '🏐',
     color: '#FF6B35',
-    isPriority: true,
+    isPriority: false,
     subMaterials: [
       {
         id: 'pengertian',
@@ -661,6 +661,7 @@ export const materials: Material[] = [
         title: 'Lapangan & Lintasan Atletik',
         emoji: '🏟️',
         category: 'lapangan',
+        imageUrl: '/lintasan-lari.jpg',
         description:
           'Stadion atletik standar memiliki keliling lintasan lari 400 meter dengan 8 lajur, area lompat jauh, serta sektor lempar.',
         keyPoints: [
@@ -762,16 +763,27 @@ export const materials: Material[] = [
       },
       {
         id: 'peraturan',
-        title: 'Peraturan Perlombaan',
+        title: 'Peraturan Perlombaan Atletik',
         emoji: '📋',
         category: 'teori',
-        description: 'Aturan diskualifikasi, pencatatan waktu, dan pengukuran jarak.',
+        description:
+          'Regulasi resmi perlombaan atletik sesuai standar World Athletics & PASI untuk masing-masing cabang lari sprint, estafet, lompat jauh, tolak peluru, dan lempar lembing.',
         keyPoints: [
-          'False start (Mencuri start) = Diskualifikasi',
-          'Pengukuran lompatan diukur dari bekas terbelakang di pasir',
+          '1. LARI SPRINT: Pelari wajib berlari di lajur masing-masing hingga finish. Pelanggaran 1x False Start (mencuri start) langsung berakibat DISKUALIFIKASI. Pemenang ditentukan saat bagian torso (dada) menyentuh bidang vertikal garis finish.',
+          '2. LARI ESTAFET: Tongkat wajib diserahkan di dalam Wissel Zone (zona pergantian 20 meter). Serah terima di luar zona berakibat diskualifikasi tim. Bila tongkat jatuh, pelari yang menjatuhkan wajib memungutnya tanpa mengganggu lajur lain.',
+          '3. LOMPAT JAUH: Tumpuan wajib 1 kaki di papan tumpuan tanpa menyentuh garis plastisin/lilin. Jarak diukur dari tepi papan tumpuan ke bekas tubuh terbelakang di bak pasir. Setiap peserta mendapat 3 kesempatan penyisihan + 3 final.',
+          '4. TOLAK PELURU: Peluru wajib ditolak (didorong) dari pangkal leher dengan 1 tangan dan jatuh di dalam sektor pendaratan (34,92°). Atlet dilarang menginjak balok depan dan WAJIB keluar dari separuh lingkaran bagian belakang.',
+          '5. LEMPAR LEMBING: Lembing dipegang pada lilitan tali dan dilempar melintasi atas bahu tanpa membelakangi sektor. Lemparan SAH apabila ujung mata lembing menancap/meninggalkan bekas pertama di tanah. Atlet dilarang menginjak garis lengkung awalan.',
         ],
-        commonMistakes: ['Mendarat di bak pasir lalu tangan jatuh ke belakang'],
-        practice: 'Diskusikan bersama kelompok: Jelaskan sanksi tegas aturan False Start (mencuri start) dalam perlombaan atletik resmi!',
+        commonMistakes: [
+          'Melakukan False Start karena tergesa-gesa melesat sebelum aba-aba tembakan pistol',
+          'Menyerahkan tongkat estafet di luar batas garis Wissel Zone 20 meter',
+          'Menginjak atau melewati garis lilin plastisin di papan tumpuan lompat jauh',
+          'Melempar peluru (seperti kasti) atau keluar lingkaran tolakan dari arah depan',
+          'Mata lembing mendarat tidak meninggalkan bekas terlebih dahulu (mendarat ekor/batang duluan)',
+        ],
+        practice:
+          'Analisis Regulasi Kelompok: Diskusikan sanksi diskualifikasi pada Lari Sprint (False Start), batas Wissel Zone pada Estafet, serta aturan pendaratan sah pada Tolak Peluru & Lempar Lembing!',
       },
     ],
   },

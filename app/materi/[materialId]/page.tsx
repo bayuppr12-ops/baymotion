@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation';
 
 function getYouTubeId(url: string): string | null {
   if (!url) return null;
-  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+  const match = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([^&\n?#]+)/);
   return match ? match[1] : null;
 }
 
@@ -330,7 +330,9 @@ export default function DynamicMaterialPage({ params }: { params: Promise<{ mate
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
                       <h3 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: '1.1rem', color: '#FF9F43', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        🎥 Tempat Link Video Pembelajaran
+                        {(activeSub.imageUrl || matchingVideo?.imageUrl) && (!matchingVideo || !matchingVideo.youtubeUrl)
+                          ? '🏟️ Visual Denah & Lapangan Pembelajaran'
+                          : '🎥 Tempat Link Video Pembelajaran'}
                       </h3>
                       <span
                         style={{
@@ -364,6 +366,31 @@ export default function DynamicMaterialPage({ params }: { params: Promise<{ mate
                               ✏️ Kelola Link Video
                             </button>
                           </Link>
+                        </div>
+                      </div>
+                    ) : (activeSub.imageUrl || matchingVideo?.imageUrl) ? (
+                      <div>
+                        <div style={{ borderRadius: '14px', overflow: 'hidden', marginBottom: '14px', border: '1.5px solid #FF6B1A', background: '#171717', textAlign: 'center', padding: '8px' }}>
+                          <img
+                            src={activeSub.imageUrl || matchingVideo?.imageUrl}
+                            alt={activeSub.title}
+                            style={{ width: '100%', maxHeight: '440px', objectFit: 'contain', borderRadius: '8px', display: 'block', margin: '0 auto' }}
+                          />
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                          <div>
+                            <span style={{ fontSize: '0.95rem', color: '#FFFFFF', fontWeight: 700 }}>
+                              🏟️ Visual Denah Lintasan Lari & Lapangan Atletik
+                            </span>
+                            <div style={{ fontSize: '0.82rem', color: '#D1D5DB' }}>
+                              Standar stadion keliling 400m dengan 8 lajur, sektor lempar, dan area lompat
+                            </div>
+                          </div>
+                          <a href={activeSub.imageUrl || matchingVideo?.imageUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                            <button className="btn-ghost" style={{ fontSize: '0.82rem', padding: '6px 14px' }}>
+                              🔍 Buka Gambar Penuh ↗
+                            </button>
+                          </a>
                         </div>
                       </div>
                     ) : (
