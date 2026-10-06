@@ -1,5 +1,5 @@
 // ============================================================
-// BAYMOTION - Type Definitions
+// SPORT EDUCATION - Type Definitions
 // ============================================================
 
 export interface Team {
@@ -77,6 +77,10 @@ export interface GameQuestion {
   correctIndex?: number;
   imageEmoji?: string;
   category: 'quiz' | 'gesture' | 'detective' | 'charades';
+  /** ID materi (sesuai data/materials.ts), mis. 'bulutangkis' */
+  material?: string;
+  /** Sub-topik singkat, mis. 'Servis', 'Footwork' */
+  subTopic?: string;
   explanation?: string;
   mistake?: string;
   techniqueName?: string;

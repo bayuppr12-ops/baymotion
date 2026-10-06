@@ -42,6 +42,17 @@ interface GameStore {
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
+if (typeof window !== 'undefined') {
+  try {
+    const oldData = localStorage.getItem('baymotion-storage');
+    if (oldData && !localStorage.getItem('sport-education-storage')) {
+      localStorage.setItem('sport-education-storage', oldData);
+    }
+  } catch {
+    // Ignore localStorage access errors if any
+  }
+}
+
 export const useGameStore = create<GameStore>()(
   persist(
     (set, get) => ({
@@ -200,7 +211,7 @@ export const useGameStore = create<GameStore>()(
       },
     }),
     {
-      name: 'baymotion-storage',
+      name: 'sport-education-storage',
       skipHydration: true,
     }
   )

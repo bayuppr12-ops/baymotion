@@ -7,7 +7,7 @@ import { useToast } from '@/components/Toast';
 import Link from 'next/link';
 import { QuestionTimer } from '@/components/QuestionTimer';
 
-type QuizCategoryKey = 'all' | 'bola-voli' | 'sepak-bola' | 'bola-basket' | 'atletik' | 'senam' | 'kebugaran';
+type QuizCategoryKey = 'all' | 'bola-voli' | 'sepak-bola' | 'bola-basket' | 'atletik' | 'senam' | 'kebugaran' | 'renang' | 'bulutangkis';
 
 const categoriesList: { key: QuizCategoryKey; title: string; emoji: string; color: string }[] = [
   { key: 'all', title: 'Semua Materi', emoji: '🌟', color: '#FF6B1A' },
@@ -17,6 +17,8 @@ const categoriesList: { key: QuizCategoryKey; title: string; emoji: string; colo
   { key: 'atletik', title: 'Atletik', emoji: '🏃', color: '#3498DB' },
   { key: 'senam', title: 'Senam', emoji: '🤸', color: '#9B59B6' },
   { key: 'kebugaran', title: 'Kebugaran Jasmani', emoji: '💪', color: '#E74C3C' },
+  { key: 'renang', title: 'Renang', emoji: '🏊', color: '#0EA5E9' },
+  { key: 'bulutangkis', title: 'Bulu Tangkis', emoji: '🏸', color: '#10B981' },
 ];
 
 export default function KuisPage() {

@@ -10,6 +10,8 @@ import {
   athleticsQuizQuestions,
   gymnasticsQuizQuestions,
   fitnessQuizQuestions,
+  swimmingQuizQuestions,
+  badmintonQuizQuestions,
   quizQuestions,
 } from '@/data/questions';
 import { useToast } from '@/components/Toast';
@@ -76,6 +78,22 @@ const quizCategories: QuizBattleCategory[] = [
     color: '#E74C3C',
     desc: 'Push-up, sit-up, shuttle run, peregangan statis/dinamis, & 5 item tes TKJI',
     questions: fitnessQuizQuestions,
+  },
+  {
+    key: 'renang',
+    title: 'Renang (Aktivitas Air)',
+    emoji: '🏊',
+    color: '#0EA5E9',
+    desc: 'Pengenalan air, meluncur streamline, gaya dada, gaya bebas, punggung, & water safety',
+    questions: swimmingQuizQuestions,
+  },
+  {
+    key: 'bulutangkis',
+    title: 'Bulu Tangkis',
+    emoji: '🏸',
+    color: '#10B981',
+    desc: 'Grip raket V/jempol, footwork 6 sudut, lob, smash menukik, drop shot, netting, & rally point 21',
+    questions: badmintonQuizQuestions,
   },
   {
     key: 'all',

@@ -1,9 +1,9 @@
 @echo off
-title PJOK PLAYGROUND - Localhost Server
+title BAYMOTION - Localhost Server
 color 0A
 cls
 echo ============================================================
-echo           🏆 PJOK PLAYGROUND - LOCALHOST 🏆
+echo               🏆 BAYMOTION - LOCALHOST 🏆
 echo ============================================================
 echo.
 echo Membuka browser ke http://localhost:3000 ...

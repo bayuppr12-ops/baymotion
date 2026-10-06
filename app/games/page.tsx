@@ -30,7 +30,7 @@ const games = [
   {
     id: 'detektif-kesalahan',
     title: 'Detektif Kesalahan',
-    desc: 'Temukan kesalahan teknik dalam situasi yang ditampilkan. Siapa detektif terbaik?',
+    desc: 'Temukan kesalahan teknik dalam situasi yang ditampilkan (tersedia mode khusus Bulu Tangkis & olahraga lainnya). Siapa detektif terbaik?',
     emoji: '🔍',
     color: '#EF4444',
     tagBg: 'rgba(239, 68, 68, 0.25)',
@@ -40,9 +40,9 @@ const games = [
     type: 'Analisis',
   },
   {
-    id: 'volley-board',
-    title: 'Volley Board',
-    desc: 'Board game digital! Lempar dadu, pindah kotak, dapat kuis atau tantangan!',
+    id: 'sport-board',
+    title: 'Sport Board',
+    desc: 'Board game digital seluruh materi PJOK (Bulu Tangkis, Bola Voli, Basket, dll). Lempar dadu, pindah kotak, jawab kuis atau tantangan fisik!',
     emoji: '🎲',
     color: '#FFC857',
     tagBg: 'rgba(255, 200, 87, 0.25)',

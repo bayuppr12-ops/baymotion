@@ -58,13 +58,14 @@ export default function Navbar() {
                 style={{
                   fontFamily: 'Poppins, sans-serif',
                   fontWeight: 900,
-                  fontSize: '1.25rem',
+                  fontSize: '1.15rem',
                   lineHeight: 1,
                   background: 'linear-gradient(135deg, #FF6B1A, #FF9F43)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
                   letterSpacing: '0.5px',
+                  whiteSpace: 'nowrap',
                 }}
               >
                 BAYMOTION

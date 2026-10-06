@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'BAYMOTION — Belajar PJOK Interaktif',
   description:
     'Platform pembelajaran interaktif dan gamifikasi untuk Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK).',
-  keywords: 'BAYMOTION, PJOK, olahraga, pembelajaran, interaktif',
+  keywords: 'BAYMOTION, Sport Education, PJOK, olahraga, pembelajaran, interaktif',
   openGraph: {
     title: 'BAYMOTION',
     description: 'Jelajahi dunia olahraga dengan cara yang lebih seru, interaktif, dan menyenangkan.',

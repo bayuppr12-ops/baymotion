@@ -349,6 +349,8 @@ export default function HomePage() {
                 { number: '04', emoji: '🏃', title: 'Atletik (Mother of Sports)', desc: 'Sprint, Start Jongkok, Estafet, Lompat Jauh, Tolak Peluru', href: '/materi/atletik' },
                 { number: '05', emoji: '🤸', title: 'Senam Lantai & Ritmik', desc: 'Guling Depan, Guling Belakang, Sikap Lilin, Kayang, Meroda', href: '/materi/senam' },
                 { number: '06', emoji: '💪', title: 'Kebugaran Jasmani', desc: 'Daya Tahan, Kekuatan, Kelentukan, Kelincahan, & TKJI', href: '/materi/kebugaran' },
+                { number: '07', emoji: '🏊', title: 'Renang (Aktivitas Air)', desc: 'Pengenalan Air, Meluncur, Gaya Dada, Bebas, Punggung, & Kupu-kupu', href: '/materi/renang' },
+                { number: '08', emoji: '🏸', title: 'Bulu Tangkis', desc: 'Sejarah, Lapangan BWF, Peraturan, Grip Raket, Footwork, & Pukulan', href: '/materi/bulutangkis' },
               ].map((item) => (
                 <Link key={item.number} href={item.href} style={{ textDecoration: 'none' }}>
                   <div className="editorial-hairline" style={{ display: 'flex', gap: '16px', alignItems: 'center', cursor: 'pointer' }}>
@@ -385,7 +387,7 @@ export default function HomePage() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
           {[
-            { href: '/games/volley-board', icon: '🎲', title: 'Sports Board Game', tag: 'Papan Interaktif', desc: 'Kocak dadu, jalankan bidak kelompok, jawab kuis di setiap kotak!' },
+            { href: '/games/sport-board', icon: '🎲', title: 'Sport Board', tag: 'Papan Interaktif', desc: 'Kocak dadu, jalankan bidak kelompok, jawab kuis di setiap kotak!' },
             { href: '/games/grand-prix', icon: '🏎️', title: 'Grand Prix Rebut & Gerak', tag: 'Rebut & Gerak', desc: 'Lomba gerakan fisik acak & jawab kuis kelompok!' },
             { href: '/games/roda-keberuntungan', icon: '🎡', title: 'Roda Keberuntungan', tag: 'Spin Wheel', desc: 'Putar roda spin 6 segmen untuk tantangan fisik!' },
             { href: '/games/memory-match', icon: '🃏', title: 'Memory Match & Gerak', tag: 'Memory Match', desc: 'Jodohkan kartu & peragakan teknik fisik di depan kelas!' },

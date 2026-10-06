@@ -11,7 +11,9 @@ export function isVideoAllowedSubMaterial(sub?: SubMaterial | null): boolean {
     'chest-pass', 'overhead-pass', 'layup', 'pivot', 'rebound',
     'sprint', 'start', 'estafet', 'lompat', 'tolak', 'lempar',
     'guling', 'lilin', 'kayang', 'meroda', 'ritmik',
-    'daya-tahan', 'kekuatan', 'kelentukan', 'kelincahan'
+    'daya-tahan', 'kekuatan', 'kelentukan', 'kelincahan',
+    'renang', 'meluncur', 'gaya-dada', 'gaya-bebas', 'gaya-punggung', 'gaya-kupu', 'kolam',
+    'bulutangkis', 'badminton', 'raket', 'grip', 'pegangan', 'footwork', 'pukulan', 'drop', 'lob', 'netting', 'drive'
   ];
   const idLower = sub.id.toLowerCase();
   return videoAllowedKeywords.some((kw) => idLower.includes(kw));
@@ -1044,6 +1046,410 @@ export const materials: Material[] = [
         ],
         commonMistakes: ['Minum es manis bersoda setelah berolahraga berat'],
         practice: 'Diskusikan bersama kelompok: Susunlah contoh menu gizi seimbang harian bagi siswa yang aktif berolahraga dan jelaskan pentingnya tidur cukup!',
+      },
+    ],
+  },
+  {
+    id: 'renang',
+    title: 'Renang (Aktivitas Air)',
+    description: 'Keterampilan bergerak di air, teknik 4 gaya renang, dan keselamatan diri!',
+    emoji: '🏊',
+    color: '#0EA5E9',
+    isPriority: false,
+    subMaterials: [
+      {
+        id: 'pengertian',
+        title: 'Pengertian & Manfaat Renang',
+        emoji: '📖',
+        category: 'teori',
+        description:
+          'Renang adalah aktivitas menggerakkan, mengapungkan, atau mengangkat seluruh bagian tubuh ke atas permukaan air dengan menggunakan kekuatan tangan dan kaki. Renang melatih hampir seluruh kelompok otot tubuh, memperkuat sistem kardiorespirasi (jantung dan paru-paru), serta melatih ketahanan mental.',
+        keyPoints: [
+          'Melatih seluruh otot tubuh (Full-body workout) dengan risiko cedera sendi minimal (low impact)',
+          'Meningkatkan kapasitas vital paru-paru dan daya tahan kardiovaskular',
+          'Induk Organisasi Dunia: World Aquatics (sebelumnya FINA didirikan tahun 1908)',
+          'Induk Organisasi Indonesia: Akuatik Indonesia (sebelumnya PRSI didirikan tahun 1951)',
+          '4 Gaya resmi kompetisi: Gaya Dada, Gaya Bebas, Gaya Punggung, dan Gaya Kupu-kupu',
+        ],
+        commonMistakes: [
+          'Masuk ke air tanpa melakukan pemanasan (stretching) yang memicu kram otot',
+          'Panik saat masuk ke air yang lebih dalam dari tinggi badan',
+          'Mengira renang hanya melatih otot lengan saja',
+        ],
+        practice:
+          'Diskusikan bersama kelompok: Jelaskan mengapa olahraga renang disebut olahraga low-impact yang sangat baik untuk melatih jantung dan paru-paru, serta sebutkan induk organisasi renang nasional dan internasional!',
+      },
+      {
+        id: 'pengenalan-air',
+        title: 'Pengenalan Air & Pernapasan',
+        emoji: '🫧',
+        category: 'teknik',
+        description:
+          'Adaptasi tubuh dengan lingkungan air merupakan pondasi utama. Kunci pernapasan renang adalah menghirup udara melalui mulut di atas permukaan air dan membuang udara (mengembuskan gelembung/bubbles) perlahan melalui hidung atau mulut saat wajah berada di dalam air.',
+        keyPoints: [
+          'Basahi tubuh terlebih dahulu di tepi kolam sebelum masuk ke dalam air',
+          'Latihan pernapasan ritmis: Ambil napas dalam lewat MULUT saat kepala naik di atas air',
+          'Tenggelamkan wajah ke dalam air dan buang napas perlahan lewat hidung/mulut (meniup gelembung)',
+          'Jangan pernah menghirup udara lewat hidung saat di dalam air untuk menghindari tersedak',
+          'Lakukan pengulangan 15–20 kali hingga terbiasa dengan ritme pernapasan air',
+        ],
+        commonMistakes: [
+          'Menghirup udara menggunakan hidung sehingga air masuk ke saluran pernapasan dan tersedak',
+          'Menahan napas terlalu lama saat kepala di dalam air sehingga tubuh tegang dan cepat lelah',
+          'Mata tertutup rapat karena takut terkena air alih-alih memakai kacamata renang',
+        ],
+        practice:
+          'Analisis bersama kelompok: Mengapa saat mengambil napas dalam renang wajib menggunakan mulut dan saat membuang napas di dalam air harus melalui hidung/mulut secara rileks?',
+      },
+      {
+        id: 'meluncur',
+        title: 'Teknik Dasar Meluncur (Streamlining)',
+        emoji: '🚀',
+        category: 'teknik',
+        description:
+          'Meluncur adalah posisi tubuh bergerak lurus menembus air tanpa kayuhan, memanfaatkan gaya dorong tolakan kaki dari dinding kolam. Posisi tubuh harus hidrodinamis (streamline) mendatar sejajar dengan permukaan air untuk memperkecil hambatan air.',
+        keyPoints: [
+          'Berdiri menempel dinding kolam dengan satu kaki menumpu di lantai dan satu telapak kaki menempel kuat di dinding',
+          'Kedua lengan lurus ke depan merapat di samping telinga, kedua ibu jari saling mengunci',
+          'Bungkukkan badan ke depan hingga telungkup rata dengan air, wajah menghadap ke dasar kolam',
+          'Tolak dinding kolam dengan kuat menggunakan kaki, lalu luncurkan tubuh sejauh mungkin ke depan',
+          'Pertahankan posisi tubuh lurus horizontal (streamline) seperti anak panah',
+        ],
+        commonMistakes: [
+          'Kepala mendongak ke atas melihat ke depan yang menyebabkan pinggul dan kaki tenggelam',
+          'Kedua tangan terbuka lebar sehingga menimbulkan hambatan air yang besar',
+          'Tolakan kaki dari dinding kolam terlalu lemah sehingga jarak luncur pendek',
+        ],
+        practice:
+          'Diskusikan bersama kelompok: Uraikan tahapan sikap tubuh streamline saat meluncur dan faktor apa saja yang menyebabkan luncuran seseorang bisa cepat dan jauh!',
+      },
+      {
+        id: 'gaya-dada',
+        title: 'Renang Gaya Dada (Gaya Katak)',
+        emoji: '🐸',
+        category: 'teknik',
+        description:
+          'Renang gaya dada (breaststroke) atau gaya katak adalah gaya renang paling populer dan santai. Posisi tubuh stabil telungkup, dengan gerakan tendangan kaki melingkar ke samping (whip kick) dan tarikan tangan di bawah dada yang terkoordinasi berirama.',
+        keyPoints: [
+          'Posisi tubuh telungkup mendatar (horizontal) sejajar permukaan air',
+          'Gerakan kaki: Tekuk kedua lutut mendekat ke panggul, buka dan tendang melingkar ke samping (whip kick), lalu rapatkan kedua kaki kembali secara lecutan kuat',
+          'Gerakan tangan: Kedua lengan membuka ke samping selebar bahu, menarik air ke arah bawah dada (pull), lalu luruskan kembali ke depan',
+          'Pernapasan: Angkat kepala dan leher ke atas permukaan air saat tangan menarik air ke dada untuk mengambil napas lewat mulut',
+          'Urutan koordinasi: Tarik tangan & ambil napas -> Tendang kaki -> Meluncur rileks (Pull, Breathe, Kick, Glide)',
+        ],
+        commonMistakes: [
+          'Arah tendangan kaki ke bawah bukannya melingkar ke samping dan merapat ke belakang',
+          'Mengangkat kepala terlalu tinggi hingga badan tegak dan pinggul tenggelam',
+          'Gerakan tangan dan kaki dilakukan bersamaan tanpa ada fase meluncur',
+        ],
+        practice:
+          'Analisis bersama kelompok: Jelaskan urutan irama Pull - Breathe - Kick - Glide pada renang gaya dada dan mengapa fase meluncur sangat menghemat tenaga perenang!',
+      },
+      {
+        id: 'gaya-bebas',
+        title: 'Renang Gaya Bebas (Front Crawl)',
+        emoji: '🏊‍♂️',
+        category: 'teknik',
+        description:
+          'Renang gaya bebas (crawl) adalah gaya renang tercepat dan paling efisien. Dilakukan dengan posisi tubuh telungkup datar di air, ayunan lengan memutar mirip kincir secara bergantian, dan pukulan kaki naik-turun yang kontinu dari pangkal paha.',
+        keyPoints: [
+          'Posisi tubuh streamline sejajar permukaan air (hydrodynamic body position)',
+          'Gerakan kaki: Mengayun naik-turun bergantian secara rileks dan kontinu (flutter kick) dengan sumber gerakan dari PANGKAL PAHA, bukan menekuk lutut',
+          'Gerakan tangan: Mengayuh bergantian dengan 5 fase utama (Entry, Catch, Pull, Push, dan Recovery)',
+          'Teknik pernapasan: Menolehkan kepala ke samping (kiri atau kanan) saat lengan satu sisi melakukan recovery di atas air',
+          'Saat bernapas, satu telinga tetap menempel di permukaan air (one goggle in, one goggle out)',
+        ],
+        commonMistakes: [
+          'Menendang air dengan menekuk lutut seperti mengayuh sepeda (menyebabkan hambatan besar)',
+          'Mengangkat seluruh kepala lurus ke depan saat bernapas sehingga kaki langsung tenggelam',
+          'Gerakan tangan menyilang garis tengah tubuh saat masuk ke dalam air (crossing over)',
+        ],
+        practice:
+          'Diskusikan bersama kelompok: Mengapa gerakan tendangan kaki gaya bebas harus bersumber dari pangkal paha dan bukan lutut? Serta bagaimana posisi kepala yang tepat saat mengambil napas ke samping?',
+      },
+      {
+        id: 'gaya-punggung',
+        title: 'Renang Gaya Punggung (Backstroke)',
+        emoji: '🌅',
+        category: 'teknik',
+        description:
+          'Renang gaya punggung adalah satu-satunya gaya renang resmi yang dilakukan dalam posisi tubuh telentang menghadap ke atas. Karena wajah selalu berada di atas permukaan air, perenang dapat bernapas lebih leluasa, namun tidak dapat melihat dinding finish di depan secara langsung.',
+        keyPoints: [
+          'Posisi tubuh telentang lurus mendatar di permukaan air, telinga terendam sejajar permukaan',
+          'Gerakan kaki: Mengayun naik-turun bergantian mirip gaya bebas namun dari posisi telentang (tendangan ke atas mendorong air)',
+          'Gerakan tangan: Mengayun memutar ke belakang bergantian secara kontinu (ibu jari keluar air duluan, kelingking masuk air duluan)',
+          'Start dilakukan dari DALAM AIR dengan berpegangan pada pegangan balok start menghadap dinding kolam',
+          'Gunakan hitungan kayuhan atau bendera pemandu (backstroke flags) 5 meter sebelum dinding untuk antisipasi pembalikan/finish',
+        ],
+        commonMistakes: [
+          'Menekuk leher dan mendekatkan dagu ke dada yang menyebabkan pinggul merosot ke bawah dan tenggelam',
+          'Gerakan kayuhan tangan terlalu bengkok dan tidak memutar penuh',
+          'Pinggul dan perut turun terlalu dalam di bawah air',
+        ],
+        practice:
+          'Analisis bersama kelompok: Jelaskan keunikan posisi tubuh dan start gaya punggung dibanding 3 gaya lainnya, serta fungsi bendera 5 meter di atas kolam bagi perenang gaya punggung!',
+      },
+      {
+        id: 'gaya-kupu',
+        title: 'Renang Gaya Kupu-Kupu (Butterfly)',
+        emoji: '🦋',
+        category: 'teknik',
+        description:
+          'Renang gaya kupu-kupu (butterfly stroke) atau gaya lumba-lumba adalah gaya yang membutuhkan koordinasi dan tenaga terbesar. Kedua lengan mengayun bersamaan ke depan di atas permukaan air, dipadukan dengan gerakan gelombang tubuh dan cambukan kaki lumba-lumba (dolphin kick).',
+        keyPoints: [
+          'Gerakan kaki: Tendangan lumba-lumba (dolphin kick), kedua kaki rapat bergerak naik-turun bersamaan seperti ekor ikan',
+          'Dalam 1 siklus kayuhan tangan terdapat 2 kali tendangan kaki (kick saat tangan masuk air & kick saat dorongan tangan selesai)',
+          'Gerakan tangan: Kedua lengan ditarik bersamaan di bawah air lalu diayunkan melayang serentak ke depan di atas permukaan air',
+          'Pernapasan: Kepala terangkat naik ke depan saat tangan menyelesaikan dorongan (push phase)',
+          'Gerakan tubuh mengombinasikan gelombang ritmis (undulasi) dari dada hingga ujung kaki',
+        ],
+        commonMistakes: [
+          'Kaki tidak rapat atau bergerak bergantian (harus simetris dan serentak)',
+          'Lengan tidak mampu keluar dari air saat recovery karena kurangnya dorongan dan kekuatan bahu',
+          'Bernapas terlalu lambat sehingga kepala terlambat kembali ke air',
+        ],
+        practice:
+          'Diskusikan bersama kelompok: Jelaskan ritme 2 kali dolphin kick dalam 1 kali putaran tangan gaya kupu-kupu dan mengapa kelenturan bahu serta pinggang sangat menentukan efisiensi gaya ini!',
+      },
+      {
+        id: 'kolam',
+        title: 'Standar Kolam & Fasilitas Renang',
+        emoji: '🏟️',
+        category: 'lapangan',
+        description:
+          'Perlengkapan, ukuran kolam renang berstandar World Aquatics / Akuatik Indonesia, serta sarana penunjang latihan untuk menunjang keamanan dan kompetisi resmi.',
+        keyPoints: [
+          'Panjang kolam standar Olimpiade: 50 meter (Long Course) atau 25 meter (Short Course)',
+          'Lebar kolam: 21 meter atau 25 meter dengan 8 hingga 10 lintasan (lane)',
+          'Lebar tiap lintasan: 2,5 meter yang dibatasi oleh tali lintasan (lane ropes) pemecah gelombang',
+          'Kedalaman air standar perlombaan: minimal 2,0 meter (1,35 meter s.d 2,0 meter untuk kolam latihan)',
+          'Suhu air standar kompetisi: 25°C hingga 28°C',
+          'Peralatan wajib atlet: Pakaian renang standar, kacamata renang (goggles), penutup kepala (swim cap)',
+          'Alat bantu latihan: Papan pelampung (kickboard), pelampung paha (pull buoy), dan sirip kaki renang (fins)',
+        ],
+        commonMistakes: [
+          'Salah mengira panjang kolam standar Olimpiade (50 meter, bukan 100 meter)',
+          'Mengira tali lintasan hanya sekadar pembatas biasa (fungsinya juga memecah gelombang ombak)',
+        ],
+        practice:
+          'Analisis bersama kelompok: Sebutkan spesifikasi dimensi kolam renang Olimpiade (panjang, lebar lintasan, suhu air) dan jelaskan fungsi papan pelampung (kickboard) serta pull buoy dalam latihan teknik!',
+      },
+      {
+        id: 'keselamatan',
+        title: 'Keselamatan di Air & Pertolongan Diri',
+        emoji: '🛡️',
+        category: 'teori',
+        description:
+          'Keselamatan di air (water safety) adalah prioritas mutlak dalam aktivitas akuatik. Memahami aturan keselamatan kolam, pencegahan kram, teknik mengapung bertahan hidup (water trappen), dan etika pertolongan darurat sangat penting untuk mencegah risiko tenggelam.',
+        keyPoints: [
+          'Wajib melakukan pemanasan menyeluruh sebelum masuk kolam untuk mencegah kram otot mendadak',
+          'Jangan pernah berenang sendirian tanpa pengawasan guru, pelatih, atau petugas penyelamat (lifeguard)',
+          'Dilarang berlari di bibir kolam karena lantai basah sangat licin dan membahayakan kepala',
+          'Jika terjadi kram otot di air: Jangan panik, balikkan tubuh ke posisi telentang (mengapung rileks), regangkan otot yang kram perlahan, dan lambaikan tangan minta tolong',
+          'Teknik Water Trappen: Gerakan menginjak-injak air tegak dengan tangan mengayuh horizontal untuk mempertahankan kepala tetap di atas air',
+          'Prinsip pertolongan darurat "Reach, Throw, Row, Go": Dahulukan meraih dengan galah/tongkat (Reach) atau melempar ban pelampung (Throw) dari luar air tanpa langsung terjun',
+        ],
+        commonMistakes: [
+          'Panik berlebihan saat kram atau lelah sehingga menghirup air ke paru-paru',
+          'Langsung terjun menolong korban tenggelam tanpa alat bantu meski belum terlatih (berisiko ikut tertarik tenggelam)',
+          'Bercanda saling mendorong teman ke kolam renang yang dalam',
+        ],
+        practice:
+          'Diskusikan bersama kelompok: Jelaskan prinsip pertolongan Reach & Throw saat menolong orang yang kesulitan di air serta jelaskan apa yang harus dilakukan jika dirimu sendiri mengalami kram di tengah kolam!',
+      },
+    ],
+  },
+  {
+    id: 'bulutangkis',
+    title: 'Bulu Tangkis',
+    description: 'Olahraga raket cepat dan dinamis yang menguji kelincahan, refleks kilat, dan taktik penempatan kok!',
+    emoji: '🏸',
+    color: '#10B981',
+    isPriority: true,
+    subMaterials: [
+      {
+        id: 'pengertian',
+        title: 'Pengertian Bulu Tangkis',
+        emoji: '🏸',
+        category: 'teori',
+        description:
+          'Bulu tangkis (badminton) adalah cabang olahraga permainan bola kecil yang dimainkan oleh dua orang (nomor tunggal) atau dua pasangan (nomor ganda) yang saling berhadapan di lapangan bersekat net. Tujuan utama permainan ini adalah memukul shuttlecock (kok) melintasi jaring net agar jatuh di area lapangan lawan dan mencegah lawan melakukan hal serupa di area sendiri.',
+        keyPoints: [
+          'Permainan bola kecil menggunakan raket dan shuttlecock (kok)',
+          'Nomor pertandingan: Tunggal Putra/Putri, Ganda Putra/Putri, dan Ganda Campuran',
+          'Shuttlecock tidak boleh menyentuh lantai/tanah di area lapangan sendiri',
+          'Hanya diperbolehkan 1 kali pukulan untuk menyeberangkan kok ke lapangan lawan',
+          'Dipimpin oleh Wasit Utama (Umpire), Hakim Servis (Service Judge), dan Hakim Garis (Line Judges)',
+        ],
+        commonMistakes: [
+          'Mengira shuttlecock boleh memantul di lantai satu kali sebelum dipukul',
+          'Menyentuh net dengan raket atau anggota badan saat reli berlangsung (net foul)',
+          'Memukul kok dua kali berturut-turut oleh pemain yang sama (double hit)',
+        ],
+        practice:
+          'Diskusikan bersama kelompok: Mengapa dalam bulu tangkis kok tidak boleh memantul di lantai dan bagaimana kecepatan refleks serta kelincahan sangat menentukan jalannya sebuah reli?',
+      },
+      {
+        id: 'sejarah',
+        title: 'Sejarah Singkat & Perkembangan',
+        emoji: '📜',
+        category: 'teori',
+        description:
+          'Olahraga bulu tangkis berakar dari permainan kuno "Battledore and Shuttlecock" di Yunani, Mesir, dan Tiongkok kuno. Pada abad ke-19, permainan ini populer di Pune (Poona), India. Perwira militer Inggris membawa permainan ini ke kediaman Duke of Beaufort di Badminton House, Gloucestershire, Inggris pada tahun 1873, yang kemudian melahirkan nama "Badminton". Organisasi internasional IBF (kini Badminton World Federation / BWF) didirikan pada 5 Juli 1934. Di Indonesia, Persatuan Bulutangkis Seluruh Indonesia (PBSI) resmi didirikan di Bandung pada 5 Mei 1951. Bulu tangkis resmi menjadi cabang olahraga Olimpiade pada Barcelona 1992, di mana Indonesia menorehkan sejarah emas pertama lewat Susy Susanti dan Alan Budikusuma.',
+        keyPoints: [
+          'Berasal dari permainan kuno Battledore & Shuttlecock dan permainan Poona di India',
+          'Nama Badminton lahir dari puri Badminton House di Gloucestershire, Inggris (1873)',
+          'BWF (Badminton World Federation) didirikan pada tanggal 5 Juli 1934',
+          'PBSI (Persatuan Bulutangkis Seluruh Indonesia) didirikan pada tanggal 5 Mei 1951 di Bandung',
+          'Resmi dipertandingkan di Olimpiade sejak Barcelona 1992 (Emas pertama Indonesia: Susy Susanti & Alan Budikusuma)',
+          'Kejuaraan beregu bergengsi dunia: Piala Thomas (putra), Piala Uber (putri), dan Piala Sudirman (campuran)',
+        ],
+        commonMistakes: [
+          'Mengira nama Badminton berasal dari nama orang atau penciptanya (sebenarnya nama istana/gedung di Inggris)',
+          'Menukar kepanjangan dan peran BWF (induk internasional) dengan PBSI (induk nasional Indonesia)',
+          'Lupa tahun bersejarah berdirinya PBSI (5 Mei 1951)',
+        ],
+        practice:
+          'Cari tahu bersama kelompok: Siapakah atlet legendaris bulu tangkis Indonesia peraih medali emas Olimpiade pertama dan apa perbedaan antara kejuaraan Piala Thomas, Piala Uber, dan Piala Sudirman!',
+      },
+      {
+        id: 'lapangan',
+        title: 'Ukuran Lapangan & Perlengkapan',
+        emoji: '🏟️',
+        category: 'lapangan',
+        imageUrl: '/lapangan-bulutangkis.svg',
+        description:
+          'Lapangan bulu tangkis berbentuk persegi panjang dengan garis batas berukuran panjang 13,40 meter. Lebar lapangan untuk nomor ganda adalah 6,10 meter, sedangkan untuk nomor tunggal adalah 5,18 meter. Net dibentangkan di tengah lapangan dengan tinggi 1,55 meter pada tiang tepi dan 1,524 meter tepat di bagian tengah. Perlengkapan utama meliputi raket ringan fleksibel (75-95 gram) dan shuttlecock berstandar internasional yang terbuat dari gabus berlapis kulit putih dengan 16 helai bulu angsa tertancap simetris.',
+        keyPoints: [
+          'Panjang lapangan: 13,40 meter (sama untuk tunggal dan ganda)',
+          'Lebar lapangan: 6,10 meter (ganda) dan 5,18 meter (tunggal)',
+          'Tinggi net: 1,55 meter pada kedua tiang samping dan 1,524 meter di bagian tengah',
+          'Jarak garis servis pendek ke net: 1,98 meter',
+          'Jarak garis servis belakang ganda ke garis belakang luar: 0,76 meter',
+          'Spesifikasi shuttlecock: 16 helai bulu angsa dengan berat 4,74 hingga 5,50 gram',
+          'Raket: terbuat dari serat karbon/grafit dengan berat 75-95 gram',
+        ],
+        commonMistakes: [
+          'Salah membedakan area lapangan tunggal (panjang sampai garis luar belakang, lebar garis dalam samping) dan ganda (lebar sampai garis luar samping, belakang garis servis pendek/panjang ganda saat servis)',
+          'Mengira tinggi net bulu tangkis sama dengan net bola voli atau tenis lapangan',
+          'Lupa bahwa garis batas adalah bagian sah dari dalam lapangan (masuk jika kok menyentuh garis)',
+        ],
+        practice:
+          'Analisis bersama kelompok dengan melihat gambar denah lapangan: Jelaskan batas garis luar untuk pertandingan tunggal vs ganda, serta jelaskan mengapa ada perbedaan garis servis panjang untuk ganda (0,76 m di depan garis belakang)!',
+      },
+      {
+        id: 'pegangan-raket',
+        title: 'Teknik Pegangan Raket (Grip)',
+        emoji: '🤝',
+        category: 'teknik',
+        description:
+          'Teknik memegang raket (gripping) adalah keterampilan paling mendasar yang menentukan kekuatan, kontrol arah, dan fleksibilitas pukulan. Terdapat empat teknik pegangan utama: Forehand Grip (seperti berjabat tangan dengan ibu jari dan telunjuk membentuk huruf V), Backhand Grip (ibu jari menekan bidang rata/pipih gagang raket sebagai tumpuan tenaga), American Grip / Gebuk Kasur (bidang raket menghadap penuh ke depan, efektif untuk smash di bibir net), dan Combination Grip (menyesuaikan secara dinamis sesuai arah datangnya kok).',
+        keyPoints: [
+          'Forehand Grip: Posisi telapak tangan seperti berjabat tangan santai, celah antara ibu jari dan jari telunjuk membentuk huruf "V"',
+          'Backhand Grip: Gagang raket diputar seperempat putaran ke kiri, ibu jari (jempol) menempel lurus menekan pada permukaan pipih gagang raket',
+          'American Grip (Gebuk Kasur): Bagian ibu jari dan jari telunjuk menempel pada bagian permukaan lebar gagang raket, sangat bertenaga untuk menyambar kok di depan net',
+          'Combination Grip: Memegang raket secara fleksibel dan luwes berpindah antara forehand dan backhand tergantung arah kok',
+          'Prinsip utama: Pegangan harus rileks (tidak digenggam kaku) agar lecutan pergelangan tangan (wrist snap) bekerja maksimal saat perkenaan kok',
+        ],
+        commonMistakes: [
+          'Menggenggam gagang raket terlalu kencang dan kaku sepanjang waktu seperti memegang palu',
+          'Tidak memindahkan posisi ibu jari saat pukulan backhand sehingga pukulan lemah dan tidak bertenaga',
+          'Menggunakan satu pegangan kaku untuk semua situasi pukulan',
+        ],
+        practice:
+          'Praktikkan bergantian dengan teman sekelompok: Lakukan gerakan transisi cepat dari Forehand Grip ke Backhand Grip dalam hitungan detik dengan memutar gagang raket menggunakan jari-jari tanpa melihat raket!',
+      },
+      {
+        id: 'footwork',
+        title: 'Teknik Langkah Kaki (Footwork)',
+        emoji: '👟',
+        category: 'teknik',
+        description:
+          'Footwork (kelincahan langkah kaki) berfungsi sebagai penyangga utama untuk mengantarkan posisi tubuh pemain ke tempat datangnya shuttlecock dalam posisi seimbang dan siap memukul. Footwork yang efisien menghemat energi, mencegah cedera pergelangan kaki/lutut, dan memungkinkan pemain segera melakukan recovery (kembali) ke posisi siap di tengah lapangan (center base) setelah melepaskan pukulan.',
+        keyPoints: [
+          'Ready Position (Sikap Siap): Berdiri seimbang di tengah lapangan, kedua kaki dibuka selebar bahu, lutut sedikit ditekuk, tumpuan pada ujung telapak kaki depan, raket diangkat di depan dada',
+          'Chasse Step: Langkah berurutan meluncur cepat ke samping atau depan tanpa menyilangkan kaki',
+          'Cross Step: Langkah silang cepat untuk menjangkau sudut terjauh lapangan belakang dengan efisien',
+          'Lunge Step: Langkah panjang dengan kaki dominan ditekuk kuat sebagai tumpuan akhir saat mengambil kok di depan net',
+          'Recovery: Segera kembali melangkah ke posisi tengah (center base) setelah selesai memukul kok',
+          'Prinsip keseimbangan: Kaki tumpuan harus kokoh saat memukul agar pukulan akurat dan tidak terjatuh',
+        ],
+        commonMistakes: [
+          'Berdiri dengan telapak kaki menapak mati (tumit menempel lantai) sehingga lambat bereaksi terhadap kok',
+          'Lupa kembali ke posisi tengah setelah memukul, sehingga membiarkan area lapangan lainnya terbuka lebar',
+          'Melangkah terlalu panjang dan terburu-buru hingga kehilangan keseimbangan badan',
+        ],
+        practice:
+          'Lakukan latihan "Shadow Badminton 6 Titik" bersama kelompok: Dari posisi tengah, lakukan gerak footwork ke depan-kanan, depan-kiri, samping-kanan, samping-kiri, belakang-kanan, dan belakang-kiri lalu kembali ke tengah dengan seimbang!',
+      },
+      {
+        id: 'pukulan',
+        title: 'Teknik Dasar Pukulan (Strokes)',
+        emoji: '⚡',
+        category: 'teknik',
+        description:
+          'Pukulan dalam bulu tangkis dibedakan berdasarkan ketinggian kontak bola, lintasan kok, dan tujuan taktiknya. Teknik pukulan utama meliputi: Servis (pembuka reli berupa servis pendek, servis panjang, atau flick), Pukulan Lob / Clear (melambungkan kok tinggi ke garis belakang lawan), Pukulan Drop Shot (memukul halus kok agar jatuh menukik tipis di bibir net lawan), Pukulan Smash (serangan utama berupa pukulan keras menukik tajam ke lantai lawan), Pukulan Netting (sentuhan halus tepat di atas pita net), dan Pukulan Drive (pukulan cepat mendatar menyusur atas net).',
+        keyPoints: [
+          'Servis: Pukulan pembuka reli; servis pendek (low serve) dominan pada nomor ganda, servis panjang (high serve) dominan pada tunggal',
+          'Lob / Clear: Pukulan lambung tinggi ke garis belakang lawan untuk bertahan atau mengatur ritme dan waktu kembali ke tengah',
+          'Drop Shot: Ayunan awalan menyerupai smash, namun saat menyentuh kok tenaga diperhalus sehingga kok meluncur menukik tipis di depan net lawan',
+          'Smash: Pukulan overhead terkeras yang diarahkan menukik tajam ke lantai area lawan dengan kekuatan penuh dan lecutan pergelangan tangan',
+          'Netting: Pukulan sentuhan halus di depan net agar kok bergulir tipis di atas pita jaring dan jatuh sedekat mungkin ke net lawan',
+          'Drive: Pukulan cepat mendatar sejajar net setinggi bahu/dada untuk menekan pertahanan lawan dalam tempo tinggi',
+        ],
+        commonMistakes: [
+          'Memukul smash dari posisi kok di belakang kepala sehingga laju kok malah datar atau melambung keluar',
+          'Pukulan netting dilakukan terlalu bertenaga sehingga kok melambung tinggi dan mudah disambar lawan di net',
+          'Gerakan ayunan drop shot terlihat berbeda dari awal sehingga lawan mudah menebak arah bola',
+          'Melakukan servis dengan posisi kepala raket lebih tinggi dari pegangan atau di atas pinggang (servis fault)',
+        ],
+        practice:
+          'Analisis bersama kelompok: Mengapa gerakan ayunan awal pukulan Drop Shot harus terlihat persis sama dengan pukulan Smash? Jelaskan unsur tipuan (deception) dan pengaruhnya terhadap antisipasi lawan!',
+      },
+      {
+        id: 'peraturan-sederhana',
+        title: 'Peraturan Sederhana & Sistem Skor',
+        emoji: '📋',
+        category: 'teori',
+        description:
+          'Pertandingan bulu tangkis modern menggunakan sistem perhitungan Rally Point dengan format Best of Three Games (mencari pemenang 2 game). Setiap game dimainkan hingga 21 poin. Setiap kali shuttlecock mati, pihak yang memenangkan reli berhak mendapatkan 1 poin dan memegang servis berikutnya. Pemain yang melakukan servis harus berdiri di kotak servis kanan jika perolehan poinnya bernilai genap (0, 2, 4, ...), dan di kotak servis kiri jika perolehan poinnya bernilai ganjil (1, 3, 5, ...). Servis selalu diarahkan menyilang (diagonal) ke kotak servis lawan.',
+        keyPoints: [
+          'Sistem skor: Rally Point 21 poin, pemenang pertandingan adalah yang memenangkan 2 game terlebih dahulu (Best of 3)',
+          'Deuce / Setting: Jika skor imbang 20-20, pertandingan dilanjutkan hingga terjadi selisih 2 poin (misal 22-20, 24-22), dengan batas maksimal skor 30 poin (skor 30-29 menang)',
+          'Posisi Servis: Poin GENAP (0, 2, 4, 6, ...) servis dari kotak KANAN; Poin GANJIL (1, 3, 5, 7, ...) servis dari kotak KIRI',
+          'Arah Servis: Wajib diarahkan menyilang (diagonal) melintasi garis servis pendek lawan',
+          'Pelanggaran (Fault): Kok jatuh di luar garis, kok tersangkut di net, raket/baju menyentuh net, kok menyentuh tubuh pemain, atau memukul kok sebelum melewati bidang net',
+          'Let (Pengulangan): Wasit menginstruksikan reli diulang jika terjadi gangguan tak terduga (misal kok lapangan sebelah masuk atau penerima belum siap)',
+        ],
+        commonMistakes: [
+          'Salah posisi kotak servis (berdiri di kiri saat poin genap atau di kanan saat poin ganjil)',
+          'Menginjak garis batas kotak servis saat memukul servis (foot fault)',
+          'Mengira batas servis nomor ganda sama dengan nomor tunggal (garis belakang ganda lebih pendek 0,76 m)',
+        ],
+        practice:
+          'Simulasi Skor Kelompok: Jika skor Tim A adalah 18 dan Tim B adalah 15, dari kotak manakah Tim A melakukan servis dan jelaskan apa yang terjadi jika skor mencapai imbang 20-20!',
+      },
+      {
+        id: 'permainan-sederhana',
+        title: 'Permainan Sederhana & Modifikasi',
+        emoji: '🎮',
+        category: 'teknik',
+        description:
+          'Permainan sederhana dan modifikasi dirancang untuk melatih keterampilan dasar bulu tangkis dalam suasana yang menggembirakan, inklusif, dan interaktif di lingkungan sekolah. Modifikasi permainan mempermudah peserta didik menguasai kontrol raket, mengasah kerja sama tim, melatih sportivitas, dan membiasakan diri dengan aturan tanpa merasa terbebani oleh aturan kompetisi formal yang kaku.',
+        keyPoints: [
+          'Permainan "Keep The Shuttlecock Flying": 3-4 siswa dalam satu kelompok bekerja sama memukul dan menjaga 1 kok tetap melayang di udara secara bergantian tanpa jatuh ke lantai',
+          'Permainan "Half-Court Single" (Bulu Tangkis Setengah Lapangan): Menggunakan setengah lebar lapangan membujur untuk melatih akurasi pukulan lurus, lob, dan kontrol bola dengan sistem 11 poin',
+          'Permainan "Target Hula Hoop": Siswa melatih akurasi pukulan servis pendek atau drop shot dengan membidik kok agar jatuh tepat di dalam lingkaran hula hoop di seberang net',
+          'Permainan "King of The Court Ceria": Permainan rotasi cepat 1 lawan 1 dengan 3 poin reli cepat, pemenang bertahan di court utama',
+          'Nilai karakter: Mengembangkan sikap sportivitas, kejujuran saat kok keluar/masuk, menghargai lawan, dan kompak bersama tim',
+        ],
+        commonMistakes: [
+          'Mengayunkan raket secara liar dan sembarangan yang berisiko mencederai rekan satu kelompok di sekitarnya',
+          'Bermain secara individualis dan tidak memberi kesempatan teman yang belum mahir untuk mencoba memukul',
+          'Mudah menyerah atau marah ketika kok sering terjatuh pada tahap awal latihan',
+        ],
+        practice:
+          'Tantangan Game Ceria Kelompok: Lakukan permainan "Keep The Shuttlecock Flying" bersama 4 teman selama 2 menit. Catat berapa kali sentuhan berturut-turut tertinggi yang berhasil diraih kelompokmu tanpa kok menyentuh lantai!',
       },
     ],
   },
