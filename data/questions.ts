@@ -1782,12 +1782,8 @@ export const challenges: ChallengeItem[] = [
 ];
 
 export const reflectionQuestions: ReflectionQuestion[] = [
-  { id: 'r1', text: 'Apa materi PJOK yang paling kamu kuasai hari ini?', emoji: '💪' },
-  { id: 'r2', text: 'Teknik apa yang masih perlu kamu latih lebih banyak?', emoji: '🤔' },
-  { id: 'r3', text: 'Bagaimana kerja sama kelompokmu dalam permainan tadi?', emoji: '🤝' },
-  { id: 'r4', text: 'Apa 3 hal penting yang kamu pelajari hari ini?', emoji: '📚' },
-  { id: 'r5', text: 'Apa yang akan kamu perbaiki pada latihan berikutnya?', emoji: '🎯' },
-  { id: 'r6', text: 'Bagaimana kamu menunjukkan sportivitas selama permainan?', emoji: '🤝' },
-  { id: 'r7', text: 'Apakah kamu merasa sudah memberikan yang terbaik? Mengapa?', emoji: '⭐' },
-  { id: 'r8', text: 'Apa manfaat kebugaran jasmani yang kamu rasakan hari ini?', emoji: '🫀' },
+  { id: 'r1', text: 'Pesan dan kesan yang kalian rasakan dalam pembelajaran selama ini', emoji: '💬' },
+  { id: 'r2', text: 'Kesan: Apa momen atau aktivitas paling berkesan dan menyenangkan selama belajar PJOK?', emoji: '✨' },
+  { id: 'r3', text: 'Pesan: Apa pesan, harapan, atau saran kalian untuk pembelajaran PJOK ke depannya?', emoji: '🎯' },
+  { id: 'r4', text: 'Manfaat & Perasaan: Bagaimana perubahan positif dan kebersamaan tim yang kalian rasakan selama ini?', emoji: '🌟' },
 ];

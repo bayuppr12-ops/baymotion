@@ -1,0 +1,164 @@
+{
+  "gameTitle": "Sport 100 - BAYMOTION",
+  "description": "Game tebak survei 5 jawaban teratas bertema PJOK & Olahraga ala Family 100",
+  "settings": {
+    "defaultTimerSeconds": 0,
+    "maxStrikes": 3,
+    "enableTimerByDefault": false,
+    "enableStrikesByDefault": true
+  },
+  "questions": [
+    {
+      "id": 1,
+      "category": "Permainan Bola Besar",
+      "question": "Sebutkan cabang olahraga yang menggunakan bola besar!",
+      "timerSeconds": 0,
+      "answers": [
+        {
+          "rank": 1,
+          "text": "Sepak Bola",
+          "points": 100,
+          "aliases": ["sepak bola", "sepakbola", "football", "soccer", "bola"]
+        },
+        {
+          "rank": 2,
+          "text": "Bola Voli",
+          "points": 80,
+          "aliases": ["voli", "bola voli", "volleyball", "volley"]
+        },
+        {
+          "rank": 3,
+          "text": "Bola Basket",
+          "points": 60,
+          "aliases": ["basket", "bola basket", "basketball"]
+        },
+        {
+          "rank": 4,
+          "text": "Futsal",
+          "points": 40,
+          "aliases": ["futsal", "mini soccer", "sepak bola mini"]
+        },
+        {
+          "rank": 5,
+          "text": "Bola Tangan",
+          "points": 20,
+          "aliases": ["bola tangan", "handball", "hand ball"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "category": "Bulu Tangkis",
+      "question": "Sebutkan teknik pukulan dasar dalam permainan bulu tangkis!",
+      "timerSeconds": 0,
+      "answers": [
+        {
+          "rank": 1,
+          "text": "Smash (Smes)",
+          "points": 100,
+          "aliases": ["smash", "smes", "jumping smash", "pukulan smash"]
+        },
+        {
+          "rank": 2,
+          "text": "Servis (Service)",
+          "points": 80,
+          "aliases": ["servis", "service", "servis pendek", "servis panjang", "flick service"]
+        },
+        {
+          "rank": 3,
+          "text": "Lob (Pukulan Melambung)",
+          "points": 60,
+          "aliases": ["lob", "pukulan lob", "clear", "melambung", "pukulan lambung"]
+        },
+        {
+          "rank": 4,
+          "text": "Drop Shot",
+          "points": 40,
+          "aliases": ["drop shot", "dropshot", "pukulan potong", "drop"]
+        },
+        {
+          "rank": 5,
+          "text": "Drive / Netting",
+          "points": 20,
+          "aliases": ["drive", "pukulan drive", "netting", "net", "permainan net"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "category": "Kebugaran Jasmani",
+      "question": "Sebutkan komponen kebugaran jasmani yang penting untuk kesehatan tubuh!",
+      "timerSeconds": 0,
+      "answers": [
+        {
+          "rank": 1,
+          "text": "Daya Tahan Jantung & Paru (Cardio)",
+          "points": 100,
+          "aliases": ["daya tahan", "endurance", "stamina", "daya tahan jantung", "kardio", "cardio", "paru"]
+        },
+        {
+          "rank": 2,
+          "text": "Kekuatan Otot (Strength)",
+          "points": 80,
+          "aliases": ["kekuatan", "strength", "daya tahan otot", "kekuatan otot"]
+        },
+        {
+          "rank": 3,
+          "text": "Kelenturan (Flexibility)",
+          "points": 60,
+          "aliases": ["kelenturan", "flexibility", "fleksibilitas", "lentur", "peregangan"]
+        },
+        {
+          "rank": 4,
+          "text": "Kecepatan (Speed)",
+          "points": 40,
+          "aliases": ["kecepatan", "speed", "sprint", "lari cepat"]
+        },
+        {
+          "rank": 5,
+          "text": "Kelincahan & Keseimbangan (Agility)",
+          "points": 20,
+          "aliases": ["kelincahan", "agility", "keseimbangan", "balance", "daya ledak", "koordinasi"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "category": "Atletik",
+      "question": "Sebutkan nomor perlombaan dalam cabang olahraga atletik!",
+      "timerSeconds": 0,
+      "answers": [
+        {
+          "rank": 1,
+          "text": "Lari Jarak Pendek (Sprint)",
+          "points": 100,
+          "aliases": ["lari sprint", "sprint", "lari jarak pendek", "100 meter", "lari 100m", "lari cepat"]
+        },
+        {
+          "rank": 2,
+          "text": "Lari Estafet",
+          "points": 80,
+          "aliases": ["estafet", "lari estafet", "sambung", "lari sambung", "tongkat estafet"]
+        },
+        {
+          "rank": 3,
+          "text": "Lompat Jauh",
+          "points": 60,
+          "aliases": ["lompat jauh", "long jump", "lompat"]
+        },
+        {
+          "rank": 4,
+          "text": "Tolak Peluru",
+          "points": 40,
+          "aliases": ["tolak peluru", "shot put", "peluru"]
+        },
+        {
+          "rank": 5,
+          "text": "Lempar Lembing",
+          "points": 20,
+          "aliases": ["lempar lembing", "javelin", "lembing", "lempar cakram", "lompat tinggi"]
+        }
+      ]
+    }
+  ]
+}

@@ -4,6 +4,18 @@ import Link from 'next/link';
 
 const games = [
   {
+    id: 'sport-100',
+    title: 'Sport 100',
+    desc: 'Game tebak 5 survei jawaban teratas ala Family 100! Tebak jawaban, kumpulkan poin, hindari 3 strike, dan jadilah tim juara!',
+    emoji: '🏆',
+    color: '#FF6B1A',
+    tagBg: 'rgba(255, 107, 26, 0.25)',
+    border: 'rgba(255, 107, 26, 0.5)',
+    players: 'Seluruh Kelas / Tim',
+    duration: '10-15 menit',
+    type: 'Family 100',
+  },
+  {
     id: 'quiz-battle',
     title: 'Quiz Battle',
     desc: 'Kuis kelompok interaktif per materi pembelajaran PJOK. Pilih materi dan uji kekompakan tim!',
